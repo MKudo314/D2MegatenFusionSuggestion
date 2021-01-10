@@ -931,14 +931,392 @@
         FusionSpeciesRule[ENUMSpecies.Kyocho][ENUMSpecies.Kyocho] = ENUMSpecies.NoValue;
 
 
-        function Demon(Name, Grade, Species) {
+        function Demon(Name, Grade, Species, FlagFusionMade) {
             var Name;
             var Grade;
             var Species;
+            var FlagFusionMade;
 
             this.Name = Name;
             this.Grade = Grade;
             this.Species = Species;
+            this.FlagFusionMade = FlagFusionMade;
+        }
+
+        var demonArray = [];
+
+        demonArray[1] = new Demon("スライム", 1, ENUMSpecies.Gedo, 1);
+        demonArray[2] = new Demon("ピクシー", 2, ENUMSpecies.Yose, 1);
+        demonArray[3] = new Demon("アズミ", 3, ENUMSpecies.Yoki, 1);
+        demonArray[4] = new Demon("カーシー", 3, ENUMSpecies.Maju, 1);
+        demonArray[5] = new Demon("ガキ", 4, ENUMSpecies.Yuki, 1);
+        demonArray[6] = new Demon("チャグリン", 4, ENUMSpecies.Yoju, 1);
+        demonArray[7] = new Demon("メルコム", 4, ENUMSpecies.Datenshi, 1);
+        demonArray[8] = new Demon("モコイ", 5, ENUMSpecies.Yama, 1);
+        demonArray[9] = new Demon("アガシオン", 5, ENUMSpecies.Youma, 1);
+        demonArray[10] = new Demon("コッパテング", 7, ENUMSpecies.Youma, 1);
+        demonArray[11] = new Demon("オバリヨン", 7, ENUMSpecies.Yuki, 1);
+        demonArray[12] = new Demon("ジャックフロスト", 7, ENUMSpecies.Yose, 1);
+        demonArray[13] = new Demon("イヌガミ", 9, ENUMSpecies.Maju, 1);
+        demonArray[14] = new Demon("バイコーン", 9, ENUMSpecies.Yoju, 1);
+        demonArray[15] = new Demon("ザントマン", 10, ENUMSpecies.Yama, 1);
+        demonArray[16] = new Demon("ファントム", 10, ENUMSpecies.Gedo, 1);
+        demonArray[17] = new Demon("エリゴール", 10, ENUMSpecies.Datenshi, 1);
+        demonArray[18] = new Demon("アプサラス", 11, ENUMSpecies.Youma, 1);
+        demonArray[19] = new Demon("グレムリン", 11, ENUMSpecies.Jaki, 1);
+        demonArray[20] = new Demon("コロポックル", 12, ENUMSpecies.Tirei, 1);
+        demonArray[21] = new Demon("リャナンシー", 12, ENUMSpecies.Kijo, 1);
+        demonArray[22] = new Demon("ジャックランタン", 13, ENUMSpecies.Yose, 1);
+        demonArray[23] = new Demon("ネコマタ", 14, ENUMSpecies.Maju, 1);
+        demonArray[24] = new Demon("ノズチ", 15, ENUMSpecies.Ryuo, 1);
+        demonArray[25] = new Demon("モムノフ", 15, ENUMSpecies.Yoki, 1);
+        demonArray[26] = new Demon("ブロブ", 20, ENUMSpecies.Gedo, 1);
+        demonArray[27] = new Demon("ライジュウ", 20, ENUMSpecies.Yoju, 1);
+        demonArray[28] = new Demon("モウリョウ", 20, ENUMSpecies.Yuki, 1);
+        demonArray[29] = new Demon("エンジェル", 20, ENUMSpecies.Tenshi, 1);
+        demonArray[30] = new Demon("カブソ", 20, ENUMSpecies.Maju, 0);
+        demonArray[31] = new Demon("インキュバス", 21, ENUMSpecies.Yama, 1);
+        demonArray[32] = new Demon("コダマ", 22, ENUMSpecies.Tirei, 1);
+        demonArray[33] = new Demon("ジャック・リパー", 22, ENUMSpecies.Gedo, 0);
+        demonArray[34] = new Demon("ヨモツシコメ", 23, ENUMSpecies.Kijo, 1);
+        demonArray[35] = new Demon("デカラビア", 23, ENUMSpecies.Datenshi, 1);
+        demonArray[36] = new Demon("ハイピクシー", 24, ENUMSpecies.Yose, 1);
+        demonArray[37] = new Demon("ハンサ", 24, ENUMSpecies.Reicho, 1);
+        demonArray[38] = new Demon("アークエンジェル", 25, ENUMSpecies.Tenshi, 1);
+        demonArray[39] = new Demon("ブラックウーズ", 25, ENUMSpecies.Gedo, 1);
+        demonArray[40] = new Demon("ヌエ", 25, ENUMSpecies.Yoju, 1);
+        demonArray[41] = new Demon("ピシャーチャ", 26, ENUMSpecies.Yuki, 1);
+        demonArray[42] = new Demon("アブラクサス", 26, ENUMSpecies.Jashin, 1);
+        demonArray[43] = new Demon("イッポンダタラ", 26, ENUMSpecies.Jaki, 1);
+        demonArray[44] = new Demon("ハトホル", 27, ENUMSpecies.Megami, 1);
+        demonArray[45] = new Demon("ヘケト", 27, ENUMSpecies.Seiju, 1);
+        demonArray[46] = new Demon("クラマテング", 27, ENUMSpecies.Genma, 1);
+        demonArray[47] = new Demon("タケミナカタ", 27, ENUMSpecies.Kijin, 1);
+        demonArray[48] = new Demon("オニ", 27, ENUMSpecies.Yoki, 1);
+        demonArray[49] = new Demon("スパルナ", 28, ENUMSpecies.Reicho, 1);
+        demonArray[50] = new Demon("ナーガ", 28, ENUMSpecies.Ryuo, 1);
+        demonArray[51] = new Demon("フォーモリア", 30, ENUMSpecies.Yama, 1);
+        demonArray[52] = new Demon("ナジャ", 30, ENUMSpecies.Yose, 0);
+        demonArray[53] = new Demon("シーサー", 33, ENUMSpecies.Shinju, 1);
+        demonArray[54] = new Demon("ヤクシニー", 34, ENUMSpecies.Kijo, 1);
+        demonArray[55] = new Demon("レギオン", 34, ENUMSpecies.Yuki, 1);
+        demonArray[56] = new Demon("ディース", 34, ENUMSpecies.Youma, 1);
+        demonArray[57] = new Demon("オルトロス", 35, ENUMSpecies.Maju, 1);
+        demonArray[58] = new Demon("ケルピー", 35, ENUMSpecies.Yose, 1);
+        demonArray[59] = new Demon("パトリムパス", 35, ENUMSpecies.Ryujin, 1);
+        demonArray[60] = new Demon("シャドウ", 35, ENUMSpecies.Gedo, 1);
+        demonArray[61] = new Demon("プリンシパリティ", 35, ENUMSpecies.Tenshi, 1);
+        demonArray[62] = new Demon("パワー", 40, ENUMSpecies.Tenshi, 1);
+        demonArray[63] = new Demon("カハク", 40, ENUMSpecies.Tirei, 1);
+        demonArray[64] = new Demon("ペレ", 40, ENUMSpecies.Jiboshin, 1);
+        demonArray[65] = new Demon("ヴァルキリー", 40, ENUMSpecies.Youma, 1);
+        demonArray[66] = new Demon("タム・リン", 40, ENUMSpecies.Genma, 1);
+        demonArray[67] = new Demon("ヨモツイクサ", 41, ENUMSpecies.Yoki, 1);
+        demonArray[68] = new Demon("ゾウチョウテン", 41, ENUMSpecies.Kijin, 1);
+        demonArray[69] = new Demon("マカラ", 41, ENUMSpecies.Ryujin, 1);
+        demonArray[70] = new Demon("マカミ", 41, ENUMSpecies.Shinju, 1);
+        demonArray[71] = new Demon("バフォメット", 41, ENUMSpecies.Jashin, 1);
+        demonArray[72] = new Demon("フォルネウス", 41, ENUMSpecies.Datenshi, 1);
+        demonArray[73] = new Demon("モスマン", 41, ENUMSpecies.Yoju, 1);
+        demonArray[74] = new Demon("ユニコーン", 42, ENUMSpecies.Seiju, 1);
+        demonArray[75] = new Demon("カマソッソ", 42, ENUMSpecies.Kyocho, 1);
+        demonArray[76] = new Demon("キウン", 42, ENUMSpecies.Yama, 1);
+        demonArray[77] = new Demon("シルキー", 42, ENUMSpecies.Yose, 1);
+        demonArray[78] = new Demon("マーメイド", 42, ENUMSpecies.Kijo, 1);
+        demonArray[79] = new Demon("ライラ", 43, ENUMSpecies.Daitenshi, 1);
+        demonArray[80] = new Demon("ラフィン・スカル", 44, ENUMSpecies.Yuki, 1);
+        demonArray[81] = new Demon("アーマーン", 44, ENUMSpecies.Maju, 1);
+        demonArray[82] = new Demon("アピス", 44, ENUMSpecies.Seiju, 1);
+        demonArray[83] = new Demon("アレス", 44, ENUMSpecies.Hakaishin, 1);
+        demonArray[84] = new Demon("ジャターユ", 44, ENUMSpecies.Reicho, 1);
+        demonArray[85] = new Demon("アリアンロッド", 44, ENUMSpecies.Megami, 1);
+        demonArray[86] = new Demon("マッドガッサー", 45, ENUMSpecies.Gedo, 1);
+        demonArray[87] = new Demon("ゲンブ", 45, ENUMSpecies.Ryuo, 1);
+        demonArray[88] = new Demon("オーカス", 46, ENUMSpecies.Mao, 1);
+        demonArray[89] = new Demon("カワンチャ", 46, ENUMSpecies.Tirei, 1);
+        demonArray[90] = new Demon("ピアレイ", 46, ENUMSpecies.Yoju, 1);
+        demonArray[91] = new Demon("クシナダヒメ", 47, ENUMSpecies.Jiboshin, 1);
+        demonArray[92] = new Demon("ヴァーチャー", 47, ENUMSpecies.Tenshi, 1);
+        demonArray[93] = new Demon("セタンタ", 47, ENUMSpecies.Yose, 1);
+        demonArray[94] = new Demon("イルルヤンカシュ", 47, ENUMSpecies.Ryujin, 1);
+        demonArray[95] = new Demon("リリム", 47, ENUMSpecies.Yama, 1);
+        demonArray[96] = new Demon("ビャッコ", 48, ENUMSpecies.Seiju, 1);
+        demonArray[97] = new Demon("キマイラ", 49, ENUMSpecies.Shinju, 1);
+        demonArray[98] = new Demon("クルースニク", 49, ENUMSpecies.Genma, 1);
+        demonArray[99] = new Demon("シキオウジ", 49, ENUMSpecies.Yoki, 1);
+        demonArray[100] = new Demon("ホルス", 49, ENUMSpecies.Majin, 1);
+        demonArray[101] = new Demon("モー・ショボー", 49, ENUMSpecies.Kyocho, 1);
+        demonArray[102] = new Demon("スカアハ", 50, ENUMSpecies.Megami, 1);
+        demonArray[103] = new Demon("アラハバキ", 50, ENUMSpecies.Jashin, 1);
+        demonArray[104] = new Demon("コウモクテン", 50, ENUMSpecies.Kijin, 1);
+        demonArray[105] = new Demon("グレンデル", 51, ENUMSpecies.Jaki, 1);
+        demonArray[106] = new Demon("イフリート", 52, ENUMSpecies.Youma, 1);
+        demonArray[107] = new Demon("ダーキニー", 53, ENUMSpecies.Kijo, 1);
+        demonArray[108] = new Demon("ドミニオン", 53, ENUMSpecies.Tenshi, 1);
+        demonArray[109] = new Demon("スザク", 53, ENUMSpecies.Reicho, 1);
+        demonArray[110] = new Demon("イシス", 54, ENUMSpecies.Jiboshin, 1);
+        demonArray[111] = new Demon("ベルセルク", 54, ENUMSpecies.Yoki, 1);
+        demonArray[112] = new Demon("オセ", 54, ENUMSpecies.Datenshi, 1);
+        demonArray[113] = new Demon("ヴェータラ", 55, ENUMSpecies.Yuki, 1);
+        demonArray[114] = new Demon("ミトラ", 55, ENUMSpecies.Majin, 1);
+        demonArray[115] = new Demon("ティアマト", 58, ENUMSpecies.Jaryu, 1);
+        demonArray[116] = new Demon("ティターン", 60, ENUMSpecies.Tirei, 1);
+        demonArray[117] = new Demon("ハヌマーン", 60, ENUMSpecies.Genma, 1);
+        demonArray[118] = new Demon("ソロネ", 60, ENUMSpecies.Tenshi, 1);
+        demonArray[119] = new Demon("アバドン", 60, ENUMSpecies.Mao, 1);
+        demonArray[120] = new Demon("キクリヒメ", 60, ENUMSpecies.Jiboshin, 1);
+        demonArray[121] = new Demon("アンズー", 60, ENUMSpecies.Kyocho, 1);
+        demonArray[122] = new Demon("パールヴァティ", 60, ENUMSpecies.Megami, 0);
+        demonArray[123] = new Demon("異世界アバドン", 60, ENUMSpecies.Mao, 0);
+        demonArray[124] = new Demon("異世界ネコマタ", 60, ENUMSpecies.Maju, 0);
+        demonArray[125] = new Demon("ケルベロス", 61, ENUMSpecies.Maju, 1);
+        demonArray[126] = new Demon("ヤマタノオロチ", 61, ENUMSpecies.Ryuo, 1);
+        demonArray[127] = new Demon("セイテンタイセイ", 61, ENUMSpecies.Hakaishin, 1);
+        demonArray[128] = new Demon("サンダルフォン", 61, ENUMSpecies.Daitenshi, 1);
+        demonArray[129] = new Demon("ラクシャーサ", 61, ENUMSpecies.Jaki, 1);
+        demonArray[130] = new Demon("フェンリル", 61, ENUMSpecies.Yoju, 1);
+        demonArray[131] = new Demon("パズス", 62, ENUMSpecies.Jashin, 1);
+        demonArray[132] = new Demon("ジコクテン", 62, ENUMSpecies.Kijin, 1);
+        demonArray[133] = new Demon("スレイプニル", 62, ENUMSpecies.Seiju, 1);
+        demonArray[134] = new Demon("ティターニア", 62, ENUMSpecies.Yose, 1);
+        demonArray[135] = new Demon("パラスアテナ", 62, ENUMSpecies.Megami, 1);
+        demonArray[136] = new Demon("サキュバス", 63, ENUMSpecies.Yama, 1);
+        demonArray[137] = new Demon("おてつだいフロスト", 63, ENUMSpecies.Yose, 0);
+        demonArray[138] = new Demon("セイリュウ", 63, ENUMSpecies.Ryujin, 1);
+        demonArray[139] = new Demon("キングフロスト", 64, ENUMSpecies.Mao, 1);
+        demonArray[140] = new Demon("トリック・ランタン", 65, ENUMSpecies.Yose, 0);
+        demonArray[141] = new Demon("ミシャグジさま", 65, ENUMSpecies.Jashin, 0);
+        demonArray[142] = new Demon("ガネーシャ", 66, ENUMSpecies.Youma, 1);
+        demonArray[143] = new Demon("トラルテクトリ", 66, ENUMSpecies.Tirei, 1);
+        demonArray[144] = new Demon("ヤタガラス", 66, ENUMSpecies.Reicho, 1);
+        demonArray[145] = new Demon("アズラエル", 67, ENUMSpecies.Daitenshi, 1);
+        demonArray[146] = new Demon("クドラク", 67, ENUMSpecies.Jaki, 1);
+        demonArray[147] = new Demon("ツクヨミ", 67, ENUMSpecies.Genma, 1);
+        demonArray[148] = new Demon("プロメテウス", 67, ENUMSpecies.Majin, 1);
+        demonArray[149] = new Demon("オベロン", 67, ENUMSpecies.Yose, 1);
+        demonArray[150] = new Demon("ランダ", 67, ENUMSpecies.Kijo, 1);
+        demonArray[151] = new Demon("スカディ", 67, ENUMSpecies.Jiboshin, 1);
+        demonArray[152] = new Demon("ギリメカラ", 67, ENUMSpecies.Jashin, 1);
+        demonArray[153] = new Demon("オンギョウキ", 68, ENUMSpecies.Yoki, 1);
+        demonArray[154] = new Demon("ベルゼブブ", 68, ENUMSpecies.Mao, 1);
+        demonArray[155] = new Demon("グクマッツ", 69, ENUMSpecies.Ryujin, 1);
+        demonArray[156] = new Demon("サラスヴァティ", 69, ENUMSpecies.Megami, 1);
+        demonArray[157] = new Demon("ホクトセイクン", 69, ENUMSpecies.Hakaishin, 1);
+        demonArray[158] = new Demon("ダンタリアン", 70, ENUMSpecies.Datenshi, 1);
+        demonArray[159] = new Demon("ビシャモンテン", 70, ENUMSpecies.Kijin, 1);
+        demonArray[160] = new Demon("ユルング", 70, ENUMSpecies.Ryuo, 1);
+        demonArray[161] = new Demon("アヌビス", 70, ENUMSpecies.Shinju, 1);
+        demonArray[162] = new Demon("グルル", 71, ENUMSpecies.Kyocho, 1);
+        demonArray[163] = new Demon("ニーズホッグ", 72, ENUMSpecies.Jaryu, 1);
+        demonArray[164] = new Demon("オーディン", 73, ENUMSpecies.Majin, 1);
+        demonArray[165] = new Demon("ヘカトンケイル", 74, ENUMSpecies.Jaki, 1);
+        demonArray[166] = new Demon("ショウキ", 75, ENUMSpecies.Kijin, 1);
+        demonArray[167] = new Demon("ロキ", 75, ENUMSpecies.Mao, 1);
+        demonArray[168] = new Demon("スフィンクス", 76, ENUMSpecies.Seiju, 1);
+        demonArray[169] = new Demon("ヤム", 77, ENUMSpecies.Jaryu, 1);
+        demonArray[170] = new Demon("ケツアルカトル", 80, ENUMSpecies.Ryujin, 1);
+        demonArray[171] = new Demon("ツィツィミトル", 80, ENUMSpecies.Mao, 0);
+        demonArray[172] = new Demon("フロストエース", 80, ENUMSpecies.Genma, 0);
+        demonArray[173] = new Demon("クロト", 80, ENUMSpecies.Kijo, 0);
+        demonArray[174] = new Demon("異世界ガルーダ", 80, ENUMSpecies.Reicho, 0);
+        demonArray[175] = new Demon("ゴグマゴグ", 80, ENUMSpecies.Tirei, 1);
+        demonArray[176] = new Demon("ガルーダ", 80, ENUMSpecies.Reicho, 1);
+        demonArray[177] = new Demon("異世界ケツアルカトル", 80, ENUMSpecies.Ryujin, 0);
+        demonArray[178] = new Demon("カルティケーヤ", 80, ENUMSpecies.Hakaishin, 0);
+        demonArray[179] = new Demon("ブラックマリア", 80, ENUMSpecies.Jiboshin, 0);
+        demonArray[180] = new Demon("リリス", 80, ENUMSpecies.Yama, 1);
+        demonArray[181] = new Demon("ファフニール", 81, ENUMSpecies.Jaryu, 1);
+        demonArray[182] = new Demon("じゃあくフロスト", 81, ENUMSpecies.Jaki, 1);
+        demonArray[183] = new Demon("クー・フーリン", 81, ENUMSpecies.Genma, 1);
+        demonArray[184] = new Demon("異世界クー・フーリン", 81, ENUMSpecies.Genma, 0);
+        demonArray[185] = new Demon("ネビロス", 81, ENUMSpecies.Datenshi, 0);
+        demonArray[186] = new Demon("ヘカーテ", 81, ENUMSpecies.Mao, 0);
+        demonArray[187] = new Demon("イシュタル", 82, ENUMSpecies.Megami, 1);
+        demonArray[188] = new Demon("スサノオ", 82, ENUMSpecies.Hakaishin, 1);
+        demonArray[189] = new Demon("フラロウス", 82, ENUMSpecies.Datenshi, 0);
+        demonArray[190] = new Demon("アマテラス", 82, ENUMSpecies.Majin, 1);
+        demonArray[191] = new Demon("ラケシス", 82, ENUMSpecies.Kijo, 0);
+        demonArray[192] = new Demon("異世界スサノオ", 82, ENUMSpecies.Hakaishin, 0);
+        demonArray[193] = new Demon("トール", 83, ENUMSpecies.Kijin, 1);
+        demonArray[194] = new Demon("アナンタ", 83, ENUMSpecies.Ryuo, 1);
+        demonArray[195] = new Demon("マンセマット", 83, ENUMSpecies.Daitenshi, 1);
+        demonArray[196] = new Demon("スルト", 83, ENUMSpecies.Mao, 1);
+        demonArray[197] = new Demon("アシェラト", 83, ENUMSpecies.Jiboshin, 1);
+        demonArray[198] = new Demon("デモニホ", 84, ENUMSpecies.Yose, 0);
+        demonArray[199] = new Demon("フレスベルグ", 84, ENUMSpecies.Kyocho, 1);
+        demonArray[200] = new Demon("セト", 84, ENUMSpecies.Jashin, 1);
+        demonArray[201] = new Demon("アトロポス", 84, ENUMSpecies.Kijo, 0);
+        demonArray[202] = new Demon("バロン", 84, ENUMSpecies.Shinju, 1);
+        demonArray[203] = new Demon("アタバク", 84, ENUMSpecies.Majin, 0);
+        demonArray[204] = new Demon("サマエル", 84, ENUMSpecies.Datenshi, 1);
+        demonArray[205] = new Demon("アザゼル", 84, ENUMSpecies.Mao, 0);
+        demonArray[206] = new Demon("アナト", 84, ENUMSpecies.Megami, 0);
+        demonArray[207] = new Demon("ベリアル", 85, ENUMSpecies.Mao, 0);
+        demonArray[208] = new Demon("キュベレ", 85, ENUMSpecies.Jiboshin, 0);
+        demonArray[209] = new Demon("ラクシュミ", 85, ENUMSpecies.Megami, 1);
+        demonArray[210] = new Demon("ハニエル", 85, ENUMSpecies.Daitenshi, 0);
+        demonArray[211] = new Demon("ザオウゴンゲン", 85, ENUMSpecies.Hakaishin, 1);
+        demonArray[212] = new Demon("異世界ラクシュミ", 85, ENUMSpecies.Megami, 0);
+        demonArray[213] = new Demon("ノルン", 86, ENUMSpecies.Megami, 0);
+        demonArray[214] = new Demon("マーヤー", 86, ENUMSpecies.Yama, 0);
+        demonArray[215] = new Demon("ヴァスキ", 86, ENUMSpecies.Jaryu, 1);
+        demonArray[216] = new Demon("バアル", 86, ENUMSpecies.Majin, 0);
+        demonArray[217] = new Demon("ウリエル", 86, ENUMSpecies.Daitenshi, 0);
+        demonArray[218] = new Demon("セイオウボ", 86, ENUMSpecies.Jiboshin, 0);
+        demonArray[219] = new Demon("ラファエル", 87, ENUMSpecies.Daitenshi, 0);
+        demonArray[220] = new Demon("ガブリエル", 88, ENUMSpecies.Daitenshi, 0);
+        demonArray[221] = new Demon("コウリュウ", 88, ENUMSpecies.Ryujin, 1);
+        demonArray[222] = new Demon("イザナミ", 89, ENUMSpecies.Megami, 1);
+        demonArray[223] = new Demon("カーリー", 89, ENUMSpecies.Jiboshin, 0);
+        demonArray[224] = new Demon("ミカエル", 90, ENUMSpecies.Daitenshi, 1);
+        demonArray[225] = new Demon("マリシテン", 90, ENUMSpecies.Kijin, 0);
+        demonArray[226] = new Demon("マーラ", 90, ENUMSpecies.Mao, 1);
+        demonArray[227] = new Demon("ルキフグス", 92, ENUMSpecies.Mao, 0);
+        demonArray[228] = new Demon("シヴァ", 93, ENUMSpecies.Hakaishin, 1);
+        demonArray[229] = new Demon("ヴィローシャナ", 93, ENUMSpecies.Majin, 0);
+        demonArray[230] = new Demon("異世界シヴァ", 93, ENUMSpecies.Hakaishin, 0);
+        demonArray[231] = new Demon("セラフ", 95, ENUMSpecies.Daitenshi, 0);
+        demonArray[232] = new Demon("アルダー", 95, ENUMSpecies.Majin, 0);
+        demonArray[233] = new Demon("アンリ・マンユ", 96, ENUMSpecies.Mao, 0);
+        demonArray[234] = new Demon("ヴィシュヌ", 97, ENUMSpecies.Majin, 1);
+        demonArray[235] = new Demon("ルシファー", 98, ENUMSpecies.Mao, 1);
+        demonArray[236] = new Demon("メタトロン", 99, ENUMSpecies.Daitenshi, 1);
+
+
+        // 種族別悪魔リスト
+        var DemonListBySpecies = [];
+        // 初期化
+        for (let key in ENUMSpecies) {
+            let value = ENUMSpecies[key];
+            if (value == -1) {
+                continue;
+            }
+            //document.write("<p>" + key + ", "+ value + "</p>");
+            DemonListBySpecies[value] = [];
+        }
+
+        //　種族別悪魔リストに悪魔追加
+        for (let value of demonArray) {
+            if (value == undefined) {
+                //document.write("<p>undefined!</p>");
+                continue;
+            }
+            //document.write("<p>" + value.Name + ", " + value.Species + "</p>");
+            DemonListBySpecies[value.Species].push(value);
+        }
+
+        //　種族別悪魔リストをグレードでソート
+        for (let key in ENUMSpecies) {
+            let value = ENUMSpecies[key];
+            if (value == -1) {
+                continue;
+            }
+            //document.write("<p>" + key + ", "+ value + "</p>");
+            DemonListBySpecies[value].sort(function (a, b) {
+                if (a.Grade < b.Grade) {
+                    return -1;
+                }
+                if (a.Grade > b.Grade) {
+                    return 1;
+                }
+                return 0;
+            })
+        }
+
+        for (let value of DemonListBySpecies[ENUMSpecies.Megami]) {
+            if (value == undefined) {
+                //document.write("<p>undefined!</p>");
+                continue;
+            }
+            document.write("<p>" + value.Name + "</p>");
+        }
+
+        function DemonFusion(demon1, demon2) {
+            document.write("Function DemonFusion: " + demon1.Name + " & " + demon2.Name);
+            var grade = Math.floor((demon1.Grade + demon2.Grade) / 2) + 1;
+            document.write("<p>" + demon1.Species + "," + demon2.Species + "</p>");
+            var species = FusionSpeciesRule[demon1.Species][demon2.Species];
+            var i, fusionDemon;
+            for (i = 0; i < DemonListBySpecies[species].length; i++) {
+                let value = DemonListBySpecies[species][i];
+                if (value == undefined) {
+                    //document.write("<p>undefined!</p>");
+                    continue;
+                }
+                if (value.FlagFusionMade == 0) {
+                    continue;
+                }
+                document.write("<p>" + value.Name + "</p>");
+                if (value.Grade >= grade) {
+                    document.write("<p>Break!</p>");
+                    fusionDemon = value;
+                    break;
+                }
+            }
+            return fusionDemon;
+        }
+
+        // 合体の基本コスト [合体元1☆][合体元2☆][合体後☆]
+        var FusionMagCostBase = [];
+        FusionMagCostBase[1] = [[], [0, 5, 50, 5400], [0, 25, 25, 5200], [0, 0, 5, 5000], [0, 0, 5, 2500, 320000], [0, 0, 0, 500, 300000]];
+        FusionMagCostBase[2] = [[], [], [0, 0, 5, 5000], [0, 0, 5, 2500, 320000], [0, 0, 0, 500, 300000]];
+        FusionMagCostBase[3] = [[], [], [], [0, 0, 0, 500, 300000], [0, 0, 0, 250, 150000, 4200000], [0, 0, 0, 0, 6000, 3000000]];
+        FusionMagCostBase[4] = [[], [], [], [], [0, 0, 0, 0, 6000, 3000000], [0, 0, 0, 0, 3000, 1500000]];
+        FusionMagCostBase[5] = [[], [], [], [], [], [0, 0, 0, 0, 0, 60000]];
+
+        // 合体のグレードごとのコスト（合体後のグレード）　グレードの1/10で参照
+        // グレード53だったら、FusionMagCostGrade[5]
+        var FusionMagCostGrade = [];
+        FusionMagCostGrade[0] = 0;
+        FusionMagCostGrade[1] = 0.15;
+        FusionMagCostGrade[2] = 0.3;
+        FusionMagCostGrade[3] = 0.45;
+        FusionMagCostGrade[4] = 60;
+        FusionMagCostGrade[5] = 75;
+        FusionMagCostGrade[6] = 1080;
+        FusionMagCostGrade[7] = 1260;
+        FusionMagCostGrade[8] = 14400;
+        FusionMagCostGrade[9] = 16200;
+
+        function calcStarGrade(grade) {
+            if (grade < 20) {
+                return 1;
+            } else if (grade < 40) {
+                return 2;
+            } else if (grade < 60) {
+                return 3;
+            } else if (grade < 80) {
+                return 4;
+            } else {
+                return 5;
+            }
+        }
+
+        // flagSotai: 0->アーキタイプあり、1->素体同士
+        function calcFusionMagCost(demon1, demon2, flagSotai) {
+            document.write("Function calcFusionMagCost: " + demon1.Name + " & " + demon2.Name);
+            if (demon1.grade > demon2.grade) {
+                let tmp = demon1;
+                demon1 = demon2;
+                demon2 = tmp;
+            }
+
+            var fusionedDemon = DemonFusion(demon1, demon2);
+            if(fusionedDemon == undefined){
+                return -1;
+            }
+            var starGrade1 = calcStarGrade(demon1.Grade);
+            var starGrade2 = calcStarGrade(demon2.Grade);
+            var starGradeFusioned = calcStarGrade(fusionedDemon.Grade);
+            document.write("<p>stargrade " + starGrade1 + ", "+ starGrade2 + ", " + starGradeFusioned + ", "+FusionMagCostBase[starGrade1][starGrade2][starGradeFusioned]+"</p>");
+            var magCost = FusionMagCostBase[starGrade1][starGrade2][starGradeFusioned] + (fusionedDemon.Grade - (demon1.Grade + demon2.Grade) / 2) * FusionMagCostGrade[Math.floor(fusionedDemon.Grade / 10)];
+            if (flagSotai == 0) {
+                return magCost;
+            } else if (flagSotai == 1) {
+                return magCost * 0.5;
+            } else {
+                return -1;
+            }
         }
 
         function FusonTreeNode() {
@@ -947,150 +1325,18 @@
             var fusionNodeArray;
         }
 
-        var demonArray = [];
-        /*
-        demonArray[1] = new Demon("スライム", 1, ENUMSpecies.Gedo);
-        var demon1 = new Demon("スライム", 1, ENUMSpecies.Gedo);
-        var demon2 = new Demon("ピクシー", 2, ENUMSpecies.Yose);
-*/
-        demonArray[1] = new Demon("スライム", 1, ENUMSpecies.Gedo);
-        demonArray[2] = new Demon("ピクシー", 2, ENUMSpecies.Yose);
-        demonArray[3] = new Demon("アズミ", 3, ENUMSpecies.Yoki);
-        demonArray[4] = new Demon("カーシー", 3, ENUMSpecies.Maju);
-        demonArray[5] = new Demon("ガキ", 4, ENUMSpecies.Yuki);
-        demonArray[6] = new Demon("チャグリン", 4, ENUMSpecies.Yoju);
-        demonArray[7] = new Demon("メルコム", 4, ENUMSpecies.Datenshi);
-        demonArray[8] = new Demon("モコイ", 5, ENUMSpecies.Yama);
-        demonArray[9] = new Demon("アガシオン", 5, ENUMSpecies.Youma);
-        demonArray[10] = new Demon("コッパテング", 7, ENUMSpecies.Youma);
-        demonArray[11] = new Demon("オバリヨン", 7, ENUMSpecies.Yuki);
-        demonArray[12] = new Demon("ジャックフロスト", 7, ENUMSpecies.Yose);
-        demonArray[13] = new Demon("イヌガミ", 9, ENUMSpecies.Maju);
-        demonArray[14] = new Demon("バイコーン", 9, ENUMSpecies.Yoju);
-        demonArray[15] = new Demon("ザントマン", 10, ENUMSpecies.Yama);
-        demonArray[16] = new Demon("ファントム", 10, ENUMSpecies.Gedo);
-        demonArray[17] = new Demon("エリゴール", 10, ENUMSpecies.Datenshi);
-        demonArray[18] = new Demon("アプサラス", 11, ENUMSpecies.Youma);
-        demonArray[19] = new Demon("グレムリン", 11, ENUMSpecies.Jaki);
-        demonArray[20] = new Demon("コロポックル", 12, ENUMSpecies.Tirei);
-        demonArray[21] = new Demon("リャナンシー", 12, ENUMSpecies.Kijo);
-        demonArray[22] = new Demon("ジャックランタン", 13, ENUMSpecies.Yose);
-        demonArray[23] = new Demon("ネコマタ", 14, ENUMSpecies.Maju);
-        demonArray[24] = new Demon("ノズチ", 15, ENUMSpecies.Ryuo);
-        demonArray[25] = new Demon("モムノフ", 15, ENUMSpecies.Yoki);
-        demonArray[27] = new Demon("ブロブ", 20, ENUMSpecies.Gedo);
-        demonArray[28] = new Demon("ライジュウ", 20, ENUMSpecies.Yoju);
-        demonArray[29] = new Demon("モウリョウ", 20, ENUMSpecies.Yuki);
-        demonArray[30] = new Demon("エンジェル", 20, ENUMSpecies.Tenshi);
-        demonArray[31] = new Demon("カブソ", 20, ENUMSpecies.Maju);
-        demonArray[33] = new Demon("インキュバス", 21, ENUMSpecies.Yama);
-        demonArray[34] = new Demon("コダマ", 22, ENUMSpecies.Tirei);
-        demonArray[35] = new Demon("ジャック・リパー", 22, ENUMSpecies.Gedo);
-        demonArray[36] = new Demon("ヨモツシコメ", 23, ENUMSpecies.Kijo);
-        demonArray[37] = new Demon("デカラビア", 23, ENUMSpecies.Datenshi);
-        demonArray[38] = new Demon("ハイピクシー", 24, ENUMSpecies.Yose);
-        demonArray[39] = new Demon("ハンサ", 24, ENUMSpecies.Reicho);
-        demonArray[40] = new Demon("アークエンジェル", 25, ENUMSpecies.Tenshi);
-        demonArray[41] = new Demon("ブラックウーズ", 25, ENUMSpecies.Gedo);
-        demonArray[42] = new Demon("ヌエ", 25, ENUMSpecies.Yoju);
-        demonArray[45] = new Demon("ピシャーチャ", 26, ENUMSpecies.Yuki);
-        demonArray[46] = new Demon("アブラクサス", 26, ENUMSpecies.Jashin);
-        demonArray[47] = new Demon("イッポンダタラ", 26, ENUMSpecies.Jaki);
-        demonArray[48] = new Demon("ハトホル", 27, ENUMSpecies.Megami);
-        demonArray[49] = new Demon("ヘケト", 27, ENUMSpecies.Seiju);
-        demonArray[50] = new Demon("クラマテング", 27, ENUMSpecies.Genma);
-        demonArray[51] = new Demon("タケミナカタ", 27, ENUMSpecies.Kijin);
-        demonArray[52] = new Demon("オニ", 27, ENUMSpecies.Yoki);
-        demonArray[53] = new Demon("スパルナ", 28, ENUMSpecies.Reicho);
-        demonArray[54] = new Demon("ナーガ", 28, ENUMSpecies.Ryuo);
-        demonArray[56] = new Demon("フォーモリア", 30, ENUMSpecies.Yama);
-        demonArray[57] = new Demon("ナジャ", 30, ENUMSpecies.Yose);
-        demonArray[59] = new Demon("シーサー", 33, ENUMSpecies.Shinju);
-        demonArray[60] = new Demon("ヤクシニー", 34, ENUMSpecies.Kijo);
-        demonArray[61] = new Demon("レギオン", 34, ENUMSpecies.Yuki);
-        demonArray[62] = new Demon("ディース", 34, ENUMSpecies.Youma);
-        demonArray[63] = new Demon("オルトロス", 35, ENUMSpecies.Maju);
-        demonArray[64] = new Demon("ケルピー", 35, ENUMSpecies.Yose);
-        demonArray[65] = new Demon("パトリムパス", 35, ENUMSpecies.Ryujin);
-        demonArray[66] = new Demon("シャドウ", 35, ENUMSpecies.Gedo);
-        demonArray[67] = new Demon("プリンシパリティ", 35, ENUMSpecies.Tenshi);
-        demonArray[69] = new Demon("パワー", 40, ENUMSpecies.Tenshi);
-        demonArray[70] = new Demon("カハク", 40, ENUMSpecies.Tirei);
-        demonArray[71] = new Demon("ペレ", 40, ENUMSpecies.Jiboshin);
-        demonArray[72] = new Demon("ヴァルキリー", 40, ENUMSpecies.Youma);
-        demonArray[74] = new Demon("タム・リン", 40, ENUMSpecies.Genma);
-        demonArray[75] = new Demon("ヨモツイクサ", 41, ENUMSpecies.Yoki);
-        demonArray[76] = new Demon("ゾウチョウテン", 41, ENUMSpecies.Kijin);
-        demonArray[77] = new Demon("マカラ", 41, ENUMSpecies.Ryujin);
-        demonArray[78] = new Demon("マカミ", 41, ENUMSpecies.Shinju);
-        demonArray[79] = new Demon("バフォメット", 41, ENUMSpecies.Jashin);
-        demonArray[80] = new Demon("フォルネウス", 41, ENUMSpecies.Datenshi);
-        demonArray[81] = new Demon("モスマン", 41, ENUMSpecies.Yoju);
-        demonArray[83] = new Demon("ユニコーン", 42, ENUMSpecies.Seiju);
-        demonArray[84] = new Demon("カマソッソ", 42, ENUMSpecies.Kyocho);
-        demonArray[85] = new Demon("キウン", 42, ENUMSpecies.Yama);
-        demonArray[86] = new Demon("シルキー", 42, ENUMSpecies.Yose);
-        demonArray[87] = new Demon("マーメイド", 42, ENUMSpecies.Kijo);
-        demonArray[89] = new Demon("ライラ", 43, ENUMSpecies.Daitenshi);
-        demonArray[90] = new Demon("ラフィン・スカル", 44, ENUMSpecies.Yuki);
-        demonArray[91] = new Demon("アーマーン", 44, ENUMSpecies.Maju);
-        demonArray[92] = new Demon("アピス", 44, ENUMSpecies.Seiju);
-        demonArray[93] = new Demon("アレス", 44, ENUMSpecies.Hakaishin);
-        demonArray[94] = new Demon("ジャターユ", 44, ENUMSpecies.Reicho);
-        demonArray[95] = new Demon("アリアンロッド", 44, ENUMSpecies.Megami);
-        demonArray[96] = new Demon("マッドガッサー", 45, ENUMSpecies.Gedo);
-        demonArray[97] = new Demon("ゲンブ", 45, ENUMSpecies.Ryuo);
-        demonArray[98] = new Demon("オーカス", 46, ENUMSpecies.Mao);
-        demonArray[99] = new Demon("カワンチャ", 46, ENUMSpecies.Tirei);
-        demonArray[100] = new Demon("ピアレイ", 46, ENUMSpecies.Yoju);
-        demonArray[101] = new Demon("クシナダヒメ", 47, ENUMSpecies.Jiboshin);
-        demonArray[102] = new Demon("ヴァーチャー", 47, ENUMSpecies.Tenshi);
-        demonArray[103] = new Demon("セタンタ", 47, ENUMSpecies.Yose);
-        demonArray[104] = new Demon("イルルヤンカシュ", 47, ENUMSpecies.Ryujin);
-        demonArray[105] = new Demon("リリム", 47, ENUMSpecies.Yama);
-        demonArray[106] = new Demon("ビャッコ", 48, ENUMSpecies.Seiju);
-        demonArray[107] = new Demon("キマイラ", 49, ENUMSpecies.Shinju);
-        demonArray[108] = new Demon("クルースニク", 49, ENUMSpecies.Genma);
-        demonArray[109] = new Demon("シキオウジ", 49, ENUMSpecies.Yoki);
-        demonArray[110] = new Demon("ホルス", 49, ENUMSpecies.Majin);
-        demonArray[111] = new Demon("モー・ショボー", 49, ENUMSpecies.Kyocho);
-        demonArray[112] = new Demon("スカアハ", 50, ENUMSpecies.Megami);
-        demonArray[113] = new Demon("アラハバキ", 50, ENUMSpecies.Jashin);
-        demonArray[114] = new Demon("コウモクテン", 50, ENUMSpecies.Kijin);
-        demonArray[115] = new Demon("グレンデル", 51, ENUMSpecies.Jaki);
-        demonArray[116] = new Demon("イフリート", 52, ENUMSpecies.Youma);
-        demonArray[117] = new Demon("ダーキニー", 53, ENUMSpecies.Kijo);
-        demonArray[118] = new Demon("ドミニオン", 53, ENUMSpecies.Tenshi);
-        demonArray[119] = new Demon("スザク", 53, ENUMSpecies.Reicho);
-        demonArray[120] = new Demon("イシス", 54, ENUMSpecies.Jiboshin);
-        demonArray[121] = new Demon("ベルセルク", 54, ENUMSpecies.Yoki);
-        demonArray[122] = new Demon("オセ", 54, ENUMSpecies.Datenshi);
-        demonArray[123] = new Demon("ヴェータラ", 55, ENUMSpecies.Yuki);
-        demonArray[124] = new Demon("ミトラ", 55, ENUMSpecies.Majin);
-        demonArray[126] = new Demon("ティアマト", 58, ENUMSpecies.Jaryu);
-        demonArray[127] = new Demon("ティターン", 60, ENUMSpecies.Tirei);
-        demonArray[128] = new Demon("ハヌマーン", 60, ENUMSpecies.Genma);
-        demonArray[129] = new Demon("ソロネ", 60, ENUMSpecies.Tenshi);
-        demonArray[130] = new Demon("アバドン", 60, ENUMSpecies.Mao);
-        demonArray[131] = new Demon("キクリヒメ", 60, ENUMSpecies.Jiboshin);
-        demonArray[132] = new Demon("アンズー", 60, ENUMSpecies.Kyocho);
-        demonArray[134] = new Demon("パールヴァティ", 60, ENUMSpecies.Megami);
-        demonArray[136] = new Demon("異世界アバドン", 60, ENUMSpecies.Mao);
-        demonArray[137] = new Demon("異世界ネコマタ", 60, ENUMSpecies.Maju);
-        demonArray[138] = new Demon("ケルベロス", 61, ENUMSpecies.Maju);
-        demonArray[139] = new Demon("ヤマタノオロチ", 61, ENUMSpecies.Ryuo);
-        demonArray[140] = new Demon("セイテンタイセイ", 61, ENUMSpecies.Hakaishin);
-        demonArray[141] = new Demon("サンダルフォン", 61, ENUMSpecies.Daitenshi);
-        demonArray[143] = new Demon("ラクシャーサ", 61, ENUMSpecies.Jaki);
-        demonArray[144] = new Demon("フェンリル", 61, ENUMSpecies.Yoju);
-        demonArray[145] = new Demon("パズス", 62, ENUMSpecies.Jashin);
-        demonArray[146] = new Demon("ジコクテン", 62, ENUMSpecies.Kijin);
-        demonArray[147] = new Demon("スレイプニル", 62, ENUMSpecies.Seiju);
-        demonArray[148] = new Demon("ティターニア", 62, ENUMSpecies.Yose);
 
+        var fusionDemon = DemonFusion(demonArray[210], demonArray[225]);
+        if (fusionDemon == undefined) {
+            document.write("<p>Fusion Failed</p>");
+        } else {
+            document.write("<p>Fusioned Demon: " + fusionDemon.Name + "</p>");
+        }
 
+        //var magCost = calcFusionMagCost(demonArray[100], demonArray[161],0);
+        var magCost = calcFusionMagCost(demonArray[108], demonArray[82],1);
+        document.write("<p>Mag Cost: " + magCost + "</p>");
 
-        document.write("<p>" + demonArray[1].Name + "</p>");
     </script>
 
 </body>
