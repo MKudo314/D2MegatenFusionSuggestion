@@ -21,7 +21,7 @@
             Yoki: 16, Kijo: 17, Yama: 18, Jashin: 19, Yoju: 20,
             Gedo: 21, Mao: 22, Yuki: 23, Reicho: 24, Ryujin: 25,
             Jaki: 26, Tirei: 27, Jaryu: 28, Kyocho: 29,
-            NULL: -1
+            NoValue: -1
         };
 
         /*
@@ -36,8 +36,98 @@
         */
         var FusionSpeciesRule = [];
 
-        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Daitenshi] = ENUMSpecies.NULL;
+        // 合体表 大天使
+        /*
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Daitenshi] = ENUMSpecies.NoValue;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Megami] = ENUMSpecies.Majin;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Majin] = ENUMSpecies.Datenshi;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Shinju] = ENUMSpecies.Reicho;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Seiju] = ENUMSpecies.Megami;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Genma] = ENUMSpecies.Yoju;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Hakaishin] = ENUMSpecies.Mao;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Jiboshin] = ENUMSpecies.Majin;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Kijin] = ENUMSpecies.Hakaishin;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Tenshi] = ENUMSpecies.Megami;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Youma] = ENUMSpecies.Yoki;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Ryuo] = ENUMSpecies.Maju;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Maju] = ENUMSpecies.Majin;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yose] = ENUMSpecies.Seiju;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Datenshi] = ENUMSpecies.Jiboshin;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yoki] = ENUMSpecies.Yoju;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Kijo] = ENUMSpecies.Megami;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yama] = ENUMSpecies.Datenshi;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Jashin] = ENUMSpecies.Yuki;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yoju] = ENUMSpecies.Yuki;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Gedo] = ENUMSpecies.Tenshi;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Mao] = ENUMSpecies.Yoju;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yuki] = ENUMSpecies.Datenshi;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Reicho] = ENUMSpecies.Megami;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Ryujin] = ENUMSpecies.Seiju;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Jaki] = ENUMSpecies.Jiboshin;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Tirei] = ENUMSpecies.Majin;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Jaryu] = ENUMSpecies.Ryuo;
+                FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Kyocho] = ENUMSpecies.Tenshi;
+        */
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Daitenshi] = ENUMSpecies.NoValue;
         FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Megami] = ENUMSpecies.Majin;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Majin] = ENUMSpecies.Datenshi;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Shinju] = ENUMSpecies.Reicho;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Seiju] = ENUMSpecies.Megami;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Genma] = ENUMSpecies.Yoju;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Hakaishin] = ENUMSpecies.Mao;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Jiboshin] = ENUMSpecies.Majin;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Kijin] = ENUMSpecies.Hakaishin;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Tenshi] = ENUMSpecies.Megami;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Youma] = ENUMSpecies.Yoki;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Ryuo] = ENUMSpecies.Maju;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Maju] = ENUMSpecies.Majin;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yose] = ENUMSpecies.Seiju;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Datenshi] = ENUMSpecies.Jiboshin;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yoki] = ENUMSpecies.Yoju;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Kijo] = ENUMSpecies.Megami;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yama] = ENUMSpecies.Datenshi;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Jashin] = ENUMSpecies.Yuki;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yoju] = ENUMSpecies.Yuki;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Gedo] = ENUMSpecies.Tenshi;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Mao] = ENUMSpecies.Yoju;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Yuki] = ENUMSpecies.Datenshi;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Reicho] = ENUMSpecies.Megami;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Ryujin] = ENUMSpecies.Seiju;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Jaki] = ENUMSpecies.Jiboshin;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Tirei] = ENUMSpecies.Majin;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Jaryu] = ENUMSpecies.Ryuo;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Kyocho] = ENUMSpecies.Tenshi;
+        
+        // 合体表 女神
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Daitenshi] = ENUMSpecies.Majin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Megami] = ENUMSpecies.NoValue;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Majin] = ENUMSpecies.Genma;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Shinju] = ENUMSpecies.Daitenshi;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Seiju] = ENUMSpecies.Daitenshi;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Genma] = ENUMSpecies.Tenshi;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Hakaishin] = ENUMSpecies.Majin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Jiboshin] = ENUMSpecies.Hakaishin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Kijin] = ENUMSpecies.Jiboshin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Tenshi] = ENUMSpecies.Daitenshi;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Youma] = ENUMSpecies.Reicho;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Ryuo] = ENUMSpecies.Yose;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Maju] = ENUMSpecies.Yuki;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Yose] = ENUMSpecies.Kijo;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Datenshi] = ENUMSpecies.Kijo;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Yoki] = ENUMSpecies.Kijo;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Kijo] = ENUMSpecies.Yose;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Yama] = ENUMSpecies.Datenshi;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Jashin] = ENUMSpecies.Hakaishin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Yoju] = ENUMSpecies.Seiju;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Gedo] = ENUMSpecies.Datenshi;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Mao] = ENUMSpecies.Yuki;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Yuki] = ENUMSpecies.Hakaishin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Reicho] = ENUMSpecies.Majin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Ryujin] = ENUMSpecies.Daitenshi;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Jaki] = ENUMSpecies.Kijo;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Tirei] = ENUMSpecies.Jiboshin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Jaryu] = ENUMSpecies.Jashin;
+        FusionSpeciesRule[ENUMSpecies.Megami][ENUMSpecies.Kyocho] = ENUMSpecies.Mao;
 
 
         function Demon(Name, Grade, Species) {
