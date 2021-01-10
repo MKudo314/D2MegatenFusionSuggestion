@@ -21,20 +21,39 @@
             Yoki: 16, Kijo: 17, Yama: 18, Jashin: 19, Yoju: 20,
             Gedo: 21, Mao: 22, Yuki: 23, Reicho: 24, Ryujin: 25,
             Jaki: 26, Tirei: 27, Jaryu: 28, Kyocho: 29,
+            NULL: -1
         };
+
+        function SpeciesPair(species1, species2) {
+            if(species1 > species2){
+                let tmp = species1;
+                species1 = species2;
+                species2 = tmp;
+            }
+            return species1 * 100 + species2;
+        }
+
+        var FusionSpeciesRule =
+            [
+                SpeciesPair(ENUMSpecies.Daitenshi, ENUMSpecies.Daitenshi): ENUMSpecies.NULL,
+                SpeciesPair(ENUMSpecies.Daitenshi, ENUMSpecies.Megami): ENUMSpecies.Majin
+            ];
+
 
         function Demon(Name, Grade, Species) {
             var Name;
             var Grade;
             var Species;
-            
+
             this.Name = Name;
             this.Grade = Grade;
             this.Species = Species;
         }
 
         function FusonTreeNode() {
-
+            var demon;
+            var alpha;
+            var fusionNodeArray;
         }
 
 
@@ -42,7 +61,7 @@
         var demon2 = new Demon("ピクシー", 2, ENUMSpecies.Yose);
 
 
-        
+
         document.write("<p>" + demon1.Name + "</p>");
     </script>
 
