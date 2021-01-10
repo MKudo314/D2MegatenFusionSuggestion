@@ -13,12 +13,6 @@
 <body>
 
     <script>
-        function Demon(Name, Grade, Species) {
-            this.Name = Name;
-            this.Grade = Grade;
-            this.Species = Species;
-        }
-
         var ENUMSpecies =
         {
             Daitenshi: 1, Megami: 2, Majin: 3, Shinju: 4, Seiju: 5,
@@ -29,9 +23,26 @@
             Jaki: 26, Tirei: 27, Jaryu: 28, Kyocho: 29,
         };
 
+        function Demon(Name, Grade, Species) {
+            var Name;
+            var Grade;
+            var Species;
+            
+            this.Name = Name;
+            this.Grade = Grade;
+            this.Species = Species;
+        }
+
+        function FusonTreeNode() {
+
+        }
+
+
         var demon1 = new Demon("スライム", 1, ENUMSpecies.Gedo);
         var demon2 = new Demon("ピクシー", 2, ENUMSpecies.Yose);
 
+
+        
         document.write("<p>" + demon1.Name + "</p>");
     </script>
 
