@@ -24,6 +24,7 @@
             NULL: -1
         };
 
+        /*
         function SpeciesPair(species1, species2) {
             if(species1 > species2){
                 let tmp = species1;
@@ -32,12 +33,11 @@
             }
             return species1 * 100 + species2;
         }
+        */
+        var FusionSpeciesRule = [];
 
-        var FusionSpeciesRule =
-            [
-                SpeciesPair(ENUMSpecies.Daitenshi, ENUMSpecies.Daitenshi): ENUMSpecies.NULL,
-                SpeciesPair(ENUMSpecies.Daitenshi, ENUMSpecies.Megami): ENUMSpecies.Majin
-            ];
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Daitenshi] = ENUMSpecies.NULL;
+        FusionSpeciesRule[ENUMSpecies.Daitenshi][ENUMSpecies.Megami] = ENUMSpecies.Majin;
 
 
         function Demon(Name, Grade, Species) {
