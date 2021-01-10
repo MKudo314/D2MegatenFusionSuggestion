@@ -1,20 +1,40 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-<meta charset="UTF-8">
 
-<script type="text/javascript">
-// コードを記述する
-document.write("<p>Test in Header</p>");
-</script>
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript">
+        document.write("<p>Test in Header</p>");
+    </script>
 
 </head>
+
 <body>
 
-<script>
-// コードを記述する
-document.write("<p>Test in Body</p>");
-</script>
+    <script>
+        function Demon(Name, Grade, Species) {
+            this.Name = Name;
+            this.Grade = Grade;
+            this.Species = Species;
+        }
+
+        var ENUMSpecies =
+        {
+            Daitenshi: 1, Megami: 2, Majin: 3, Shinju: 4, Seiju: 5,
+            Genma: 6, Hakaishin: 7, Jiboshin: 8, Kijin: 9, Tenshi: 10,
+            Youma: 11, Ryuo: 12, Maju: 13, Yose: 14, Datenshi: 15,
+            Yoki: 16, Kijo: 17, Yama: 18, Jashin: 19, Yoju: 20,
+            Gedo: 21, Mao: 22, Yuki: 23, Reicho: 24, Ryujin: 25,
+            Jaki: 26, Tirei: 27, Jaryu: 28, Kyocho: 29,
+        };
+
+        var demon1 = new Demon("スライム", 1, ENUMSpecies.Gedo);
+        var demon2 = new Demon("ピクシー", 2, ENUMSpecies.Yose);
+
+        document.write("<p>" + demon1.Name + "</p>");
+    </script>
 
 </body>
+
 </html>
