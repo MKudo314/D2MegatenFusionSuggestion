@@ -4,15 +4,55 @@
 <head>
     <meta charset="UTF-8">
 
-    <script type="text/javascript">
-        document.write("<p>Test in Header</p>");
-    </script>
+    <style>
+        .sampleTable {
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 8px
+        }
 
+        .availableDemonTable {
+            border-collapse: collapse;
+            table-layout: fixed;
+            font-size: 8px
+        }
+    </style>
 </head>
 
 <body>
 
+    <table border=1 class="vailableDemonTable" id="InputAvailableDemon">
+        <tbody>
+            <tr>
+                <td width=200>名前</td>
+                <td width=50>星</td>
+                <td width=100>グレード</td>
+                <td width=100>所持個数</td>
+                <td width=100>無制限使用</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p id="DisplayResultTree">合成情報を表示します</p>
+    <p id="FusionTree">合成ツリー</p>
+
+
+    <button type="button" onclick="makeFusionTreeMain();">合体表作成！</button><br />
+
     <script>
+        /*
+        2021/1/11　
+        アーキタイプの考慮をしていない
+        合体コストはアーキ付のもの　　
+        作成条件は、持っている悪魔はいくつでも仕える者とする（FusionResultArraySotaiの該当悪魔のmagCostを0にする）
+
+        ToDo:
+            アーキタイプ付き合体、素体合体の考慮
+            持っている悪魔の個体数制限の考慮
+        */
+        var currentDate = new Date();
+        //console.log("<p>Time: " + currentDate + " " + currentDate.getMilliseconds() + "</p>");
+
         var ENUMSpecies =
         {
             Daitenshi: 1, Megami: 2, Majin: 3, Shinju: 4, Seiju: 5,
@@ -489,12 +529,13 @@
         FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Gedo] = ENUMSpecies.Genma;
         FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Mao] = ENUMSpecies.Jaryu;
         FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Yuki] = ENUMSpecies.Yoki;
-        FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Reicho] = ENUMSpecies.Ryuo;
+        FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Reicho] = ENUMSpecies.Kyocho;
         FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Ryujin] = ENUMSpecies.Ryuo;
         FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Jaki] = ENUMSpecies.Jaryu;
         FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Tirei] = ENUMSpecies.Ryujin;
         FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Jaryu] = ENUMSpecies.Kyocho;
         FusionSpeciesRule[ENUMSpecies.Datenshi][ENUMSpecies.Kyocho] = ENUMSpecies.Jaryu;
+
 
         //　合体表　妖鬼
         FusionSpeciesRule[ENUMSpecies.Yoki][ENUMSpecies.Daitenshi] = ENUMSpecies.Yoju;
@@ -931,12 +972,14 @@
         FusionSpeciesRule[ENUMSpecies.Kyocho][ENUMSpecies.Kyocho] = ENUMSpecies.NoValue;
 
 
-        function Demon(Name, Grade, Species, FlagFusionMade) {
+        function Demon(ID, Name, Grade, Species, FlagFusionMade) {
+            var ID;
             var Name;
             var Grade;
             var Species;
             var FlagFusionMade;
 
+            this.ID = ID;
             this.Name = Name;
             this.Grade = Grade;
             this.Species = Species;
@@ -945,321 +988,374 @@
 
         var demonArray = [];
 
-        demonArray[1] = new Demon("スライム", 1, ENUMSpecies.Gedo, 1);
-        demonArray[2] = new Demon("ピクシー", 2, ENUMSpecies.Yose, 1);
-        demonArray[3] = new Demon("アズミ", 3, ENUMSpecies.Yoki, 1);
-        demonArray[4] = new Demon("カーシー", 3, ENUMSpecies.Maju, 1);
-        demonArray[5] = new Demon("ガキ", 4, ENUMSpecies.Yuki, 1);
-        demonArray[6] = new Demon("チャグリン", 4, ENUMSpecies.Yoju, 1);
-        demonArray[7] = new Demon("メルコム", 4, ENUMSpecies.Datenshi, 1);
-        demonArray[8] = new Demon("モコイ", 5, ENUMSpecies.Yama, 1);
-        demonArray[9] = new Demon("アガシオン", 5, ENUMSpecies.Youma, 1);
-        demonArray[10] = new Demon("コッパテング", 7, ENUMSpecies.Youma, 1);
-        demonArray[11] = new Demon("オバリヨン", 7, ENUMSpecies.Yuki, 1);
-        demonArray[12] = new Demon("ジャックフロスト", 7, ENUMSpecies.Yose, 1);
-        demonArray[13] = new Demon("イヌガミ", 9, ENUMSpecies.Maju, 1);
-        demonArray[14] = new Demon("バイコーン", 9, ENUMSpecies.Yoju, 1);
-        demonArray[15] = new Demon("ザントマン", 10, ENUMSpecies.Yama, 1);
-        demonArray[16] = new Demon("ファントム", 10, ENUMSpecies.Gedo, 1);
-        demonArray[17] = new Demon("エリゴール", 10, ENUMSpecies.Datenshi, 1);
-        demonArray[18] = new Demon("アプサラス", 11, ENUMSpecies.Youma, 1);
-        demonArray[19] = new Demon("グレムリン", 11, ENUMSpecies.Jaki, 1);
-        demonArray[20] = new Demon("コロポックル", 12, ENUMSpecies.Tirei, 1);
-        demonArray[21] = new Demon("リャナンシー", 12, ENUMSpecies.Kijo, 1);
-        demonArray[22] = new Demon("ジャックランタン", 13, ENUMSpecies.Yose, 1);
-        demonArray[23] = new Demon("ネコマタ", 14, ENUMSpecies.Maju, 1);
-        demonArray[24] = new Demon("ノズチ", 15, ENUMSpecies.Ryuo, 1);
-        demonArray[25] = new Demon("モムノフ", 15, ENUMSpecies.Yoki, 1);
-        demonArray[26] = new Demon("ブロブ", 20, ENUMSpecies.Gedo, 1);
-        demonArray[27] = new Demon("ライジュウ", 20, ENUMSpecies.Yoju, 1);
-        demonArray[28] = new Demon("モウリョウ", 20, ENUMSpecies.Yuki, 1);
-        demonArray[29] = new Demon("エンジェル", 20, ENUMSpecies.Tenshi, 1);
-        demonArray[30] = new Demon("カブソ", 20, ENUMSpecies.Maju, 0);
-        demonArray[31] = new Demon("インキュバス", 21, ENUMSpecies.Yama, 1);
-        demonArray[32] = new Demon("コダマ", 22, ENUMSpecies.Tirei, 1);
-        demonArray[33] = new Demon("ジャック・リパー", 22, ENUMSpecies.Gedo, 0);
-        demonArray[34] = new Demon("ヨモツシコメ", 23, ENUMSpecies.Kijo, 1);
-        demonArray[35] = new Demon("デカラビア", 23, ENUMSpecies.Datenshi, 1);
-        demonArray[36] = new Demon("ハイピクシー", 24, ENUMSpecies.Yose, 1);
-        demonArray[37] = new Demon("ハンサ", 24, ENUMSpecies.Reicho, 1);
-        demonArray[38] = new Demon("アークエンジェル", 25, ENUMSpecies.Tenshi, 1);
-        demonArray[39] = new Demon("ブラックウーズ", 25, ENUMSpecies.Gedo, 1);
-        demonArray[40] = new Demon("ヌエ", 25, ENUMSpecies.Yoju, 1);
-        demonArray[41] = new Demon("ピシャーチャ", 26, ENUMSpecies.Yuki, 1);
-        demonArray[42] = new Demon("アブラクサス", 26, ENUMSpecies.Jashin, 1);
-        demonArray[43] = new Demon("イッポンダタラ", 26, ENUMSpecies.Jaki, 1);
-        demonArray[44] = new Demon("ハトホル", 27, ENUMSpecies.Megami, 1);
-        demonArray[45] = new Demon("ヘケト", 27, ENUMSpecies.Seiju, 1);
-        demonArray[46] = new Demon("クラマテング", 27, ENUMSpecies.Genma, 1);
-        demonArray[47] = new Demon("タケミナカタ", 27, ENUMSpecies.Kijin, 1);
-        demonArray[48] = new Demon("オニ", 27, ENUMSpecies.Yoki, 1);
-        demonArray[49] = new Demon("スパルナ", 28, ENUMSpecies.Reicho, 1);
-        demonArray[50] = new Demon("ナーガ", 28, ENUMSpecies.Ryuo, 1);
-        demonArray[51] = new Demon("フォーモリア", 30, ENUMSpecies.Yama, 1);
-        demonArray[52] = new Demon("ナジャ", 30, ENUMSpecies.Yose, 0);
-        demonArray[53] = new Demon("シーサー", 33, ENUMSpecies.Shinju, 1);
-        demonArray[54] = new Demon("ヤクシニー", 34, ENUMSpecies.Kijo, 1);
-        demonArray[55] = new Demon("レギオン", 34, ENUMSpecies.Yuki, 1);
-        demonArray[56] = new Demon("ディース", 34, ENUMSpecies.Youma, 1);
-        demonArray[57] = new Demon("オルトロス", 35, ENUMSpecies.Maju, 1);
-        demonArray[58] = new Demon("ケルピー", 35, ENUMSpecies.Yose, 1);
-        demonArray[59] = new Demon("パトリムパス", 35, ENUMSpecies.Ryujin, 1);
-        demonArray[60] = new Demon("シャドウ", 35, ENUMSpecies.Gedo, 1);
-        demonArray[61] = new Demon("プリンシパリティ", 35, ENUMSpecies.Tenshi, 1);
-        demonArray[62] = new Demon("パワー", 40, ENUMSpecies.Tenshi, 1);
-        demonArray[63] = new Demon("カハク", 40, ENUMSpecies.Tirei, 1);
-        demonArray[64] = new Demon("ペレ", 40, ENUMSpecies.Jiboshin, 1);
-        demonArray[65] = new Demon("ヴァルキリー", 40, ENUMSpecies.Youma, 1);
-        demonArray[66] = new Demon("タム・リン", 40, ENUMSpecies.Genma, 1);
-        demonArray[67] = new Demon("ヨモツイクサ", 41, ENUMSpecies.Yoki, 1);
-        demonArray[68] = new Demon("ゾウチョウテン", 41, ENUMSpecies.Kijin, 1);
-        demonArray[69] = new Demon("マカラ", 41, ENUMSpecies.Ryujin, 1);
-        demonArray[70] = new Demon("マカミ", 41, ENUMSpecies.Shinju, 1);
-        demonArray[71] = new Demon("バフォメット", 41, ENUMSpecies.Jashin, 1);
-        demonArray[72] = new Demon("フォルネウス", 41, ENUMSpecies.Datenshi, 1);
-        demonArray[73] = new Demon("モスマン", 41, ENUMSpecies.Yoju, 1);
-        demonArray[74] = new Demon("ユニコーン", 42, ENUMSpecies.Seiju, 1);
-        demonArray[75] = new Demon("カマソッソ", 42, ENUMSpecies.Kyocho, 1);
-        demonArray[76] = new Demon("キウン", 42, ENUMSpecies.Yama, 1);
-        demonArray[77] = new Demon("シルキー", 42, ENUMSpecies.Yose, 1);
-        demonArray[78] = new Demon("マーメイド", 42, ENUMSpecies.Kijo, 1);
-        demonArray[79] = new Demon("ライラ", 43, ENUMSpecies.Daitenshi, 1);
-        demonArray[80] = new Demon("ラフィン・スカル", 44, ENUMSpecies.Yuki, 1);
-        demonArray[81] = new Demon("アーマーン", 44, ENUMSpecies.Maju, 1);
-        demonArray[82] = new Demon("アピス", 44, ENUMSpecies.Seiju, 1);
-        demonArray[83] = new Demon("アレス", 44, ENUMSpecies.Hakaishin, 1);
-        demonArray[84] = new Demon("ジャターユ", 44, ENUMSpecies.Reicho, 1);
-        demonArray[85] = new Demon("アリアンロッド", 44, ENUMSpecies.Megami, 1);
-        demonArray[86] = new Demon("マッドガッサー", 45, ENUMSpecies.Gedo, 1);
-        demonArray[87] = new Demon("ゲンブ", 45, ENUMSpecies.Ryuo, 1);
-        demonArray[88] = new Demon("オーカス", 46, ENUMSpecies.Mao, 1);
-        demonArray[89] = new Demon("カワンチャ", 46, ENUMSpecies.Tirei, 1);
-        demonArray[90] = new Demon("ピアレイ", 46, ENUMSpecies.Yoju, 1);
-        demonArray[91] = new Demon("クシナダヒメ", 47, ENUMSpecies.Jiboshin, 1);
-        demonArray[92] = new Demon("ヴァーチャー", 47, ENUMSpecies.Tenshi, 1);
-        demonArray[93] = new Demon("セタンタ", 47, ENUMSpecies.Yose, 1);
-        demonArray[94] = new Demon("イルルヤンカシュ", 47, ENUMSpecies.Ryujin, 1);
-        demonArray[95] = new Demon("リリム", 47, ENUMSpecies.Yama, 1);
-        demonArray[96] = new Demon("ビャッコ", 48, ENUMSpecies.Seiju, 1);
-        demonArray[97] = new Demon("キマイラ", 49, ENUMSpecies.Shinju, 1);
-        demonArray[98] = new Demon("クルースニク", 49, ENUMSpecies.Genma, 1);
-        demonArray[99] = new Demon("シキオウジ", 49, ENUMSpecies.Yoki, 1);
-        demonArray[100] = new Demon("ホルス", 49, ENUMSpecies.Majin, 1);
-        demonArray[101] = new Demon("モー・ショボー", 49, ENUMSpecies.Kyocho, 1);
-        demonArray[102] = new Demon("スカアハ", 50, ENUMSpecies.Megami, 1);
-        demonArray[103] = new Demon("アラハバキ", 50, ENUMSpecies.Jashin, 1);
-        demonArray[104] = new Demon("コウモクテン", 50, ENUMSpecies.Kijin, 1);
-        demonArray[105] = new Demon("グレンデル", 51, ENUMSpecies.Jaki, 1);
-        demonArray[106] = new Demon("イフリート", 52, ENUMSpecies.Youma, 1);
-        demonArray[107] = new Demon("ダーキニー", 53, ENUMSpecies.Kijo, 1);
-        demonArray[108] = new Demon("ドミニオン", 53, ENUMSpecies.Tenshi, 1);
-        demonArray[109] = new Demon("スザク", 53, ENUMSpecies.Reicho, 1);
-        demonArray[110] = new Demon("イシス", 54, ENUMSpecies.Jiboshin, 1);
-        demonArray[111] = new Demon("ベルセルク", 54, ENUMSpecies.Yoki, 1);
-        demonArray[112] = new Demon("オセ", 54, ENUMSpecies.Datenshi, 1);
-        demonArray[113] = new Demon("ヴェータラ", 55, ENUMSpecies.Yuki, 1);
-        demonArray[114] = new Demon("ミトラ", 55, ENUMSpecies.Majin, 1);
-        demonArray[115] = new Demon("ティアマト", 58, ENUMSpecies.Jaryu, 1);
-        demonArray[116] = new Demon("ティターン", 60, ENUMSpecies.Tirei, 1);
-        demonArray[117] = new Demon("ハヌマーン", 60, ENUMSpecies.Genma, 1);
-        demonArray[118] = new Demon("ソロネ", 60, ENUMSpecies.Tenshi, 1);
-        demonArray[119] = new Demon("アバドン", 60, ENUMSpecies.Mao, 1);
-        demonArray[120] = new Demon("キクリヒメ", 60, ENUMSpecies.Jiboshin, 1);
-        demonArray[121] = new Demon("アンズー", 60, ENUMSpecies.Kyocho, 1);
-        demonArray[122] = new Demon("パールヴァティ", 60, ENUMSpecies.Megami, 0);
-        demonArray[123] = new Demon("異世界アバドン", 60, ENUMSpecies.Mao, 0);
-        demonArray[124] = new Demon("異世界ネコマタ", 60, ENUMSpecies.Maju, 0);
-        demonArray[125] = new Demon("ケルベロス", 61, ENUMSpecies.Maju, 1);
-        demonArray[126] = new Demon("ヤマタノオロチ", 61, ENUMSpecies.Ryuo, 1);
-        demonArray[127] = new Demon("セイテンタイセイ", 61, ENUMSpecies.Hakaishin, 1);
-        demonArray[128] = new Demon("サンダルフォン", 61, ENUMSpecies.Daitenshi, 1);
-        demonArray[129] = new Demon("ラクシャーサ", 61, ENUMSpecies.Jaki, 1);
-        demonArray[130] = new Demon("フェンリル", 61, ENUMSpecies.Yoju, 1);
-        demonArray[131] = new Demon("パズス", 62, ENUMSpecies.Jashin, 1);
-        demonArray[132] = new Demon("ジコクテン", 62, ENUMSpecies.Kijin, 1);
-        demonArray[133] = new Demon("スレイプニル", 62, ENUMSpecies.Seiju, 1);
-        demonArray[134] = new Demon("ティターニア", 62, ENUMSpecies.Yose, 1);
-        demonArray[135] = new Demon("パラスアテナ", 62, ENUMSpecies.Megami, 1);
-        demonArray[136] = new Demon("サキュバス", 63, ENUMSpecies.Yama, 1);
-        demonArray[137] = new Demon("おてつだいフロスト", 63, ENUMSpecies.Yose, 0);
-        demonArray[138] = new Demon("セイリュウ", 63, ENUMSpecies.Ryujin, 1);
-        demonArray[139] = new Demon("キングフロスト", 64, ENUMSpecies.Mao, 1);
-        demonArray[140] = new Demon("トリック・ランタン", 65, ENUMSpecies.Yose, 0);
-        demonArray[141] = new Demon("ミシャグジさま", 65, ENUMSpecies.Jashin, 0);
-        demonArray[142] = new Demon("ガネーシャ", 66, ENUMSpecies.Youma, 1);
-        demonArray[143] = new Demon("トラルテクトリ", 66, ENUMSpecies.Tirei, 1);
-        demonArray[144] = new Demon("ヤタガラス", 66, ENUMSpecies.Reicho, 1);
-        demonArray[145] = new Demon("アズラエル", 67, ENUMSpecies.Daitenshi, 1);
-        demonArray[146] = new Demon("クドラク", 67, ENUMSpecies.Jaki, 1);
-        demonArray[147] = new Demon("ツクヨミ", 67, ENUMSpecies.Genma, 1);
-        demonArray[148] = new Demon("プロメテウス", 67, ENUMSpecies.Majin, 1);
-        demonArray[149] = new Demon("オベロン", 67, ENUMSpecies.Yose, 1);
-        demonArray[150] = new Demon("ランダ", 67, ENUMSpecies.Kijo, 1);
-        demonArray[151] = new Demon("スカディ", 67, ENUMSpecies.Jiboshin, 1);
-        demonArray[152] = new Demon("ギリメカラ", 67, ENUMSpecies.Jashin, 1);
-        demonArray[153] = new Demon("オンギョウキ", 68, ENUMSpecies.Yoki, 1);
-        demonArray[154] = new Demon("ベルゼブブ", 68, ENUMSpecies.Mao, 1);
-        demonArray[155] = new Demon("グクマッツ", 69, ENUMSpecies.Ryujin, 1);
-        demonArray[156] = new Demon("サラスヴァティ", 69, ENUMSpecies.Megami, 1);
-        demonArray[157] = new Demon("ホクトセイクン", 69, ENUMSpecies.Hakaishin, 1);
-        demonArray[158] = new Demon("ダンタリアン", 70, ENUMSpecies.Datenshi, 1);
-        demonArray[159] = new Demon("ビシャモンテン", 70, ENUMSpecies.Kijin, 1);
-        demonArray[160] = new Demon("ユルング", 70, ENUMSpecies.Ryuo, 1);
-        demonArray[161] = new Demon("アヌビス", 70, ENUMSpecies.Shinju, 1);
-        demonArray[162] = new Demon("グルル", 71, ENUMSpecies.Kyocho, 1);
-        demonArray[163] = new Demon("ニーズホッグ", 72, ENUMSpecies.Jaryu, 1);
-        demonArray[164] = new Demon("オーディン", 73, ENUMSpecies.Majin, 1);
-        demonArray[165] = new Demon("ヘカトンケイル", 74, ENUMSpecies.Jaki, 1);
-        demonArray[166] = new Demon("ショウキ", 75, ENUMSpecies.Kijin, 1);
-        demonArray[167] = new Demon("ロキ", 75, ENUMSpecies.Mao, 1);
-        demonArray[168] = new Demon("スフィンクス", 76, ENUMSpecies.Seiju, 1);
-        demonArray[169] = new Demon("ヤム", 77, ENUMSpecies.Jaryu, 1);
-        demonArray[170] = new Demon("ケツアルカトル", 80, ENUMSpecies.Ryujin, 1);
-        demonArray[171] = new Demon("ツィツィミトル", 80, ENUMSpecies.Mao, 0);
-        demonArray[172] = new Demon("フロストエース", 80, ENUMSpecies.Genma, 0);
-        demonArray[173] = new Demon("クロト", 80, ENUMSpecies.Kijo, 0);
-        demonArray[174] = new Demon("異世界ガルーダ", 80, ENUMSpecies.Reicho, 0);
-        demonArray[175] = new Demon("ゴグマゴグ", 80, ENUMSpecies.Tirei, 1);
-        demonArray[176] = new Demon("ガルーダ", 80, ENUMSpecies.Reicho, 1);
-        demonArray[177] = new Demon("異世界ケツアルカトル", 80, ENUMSpecies.Ryujin, 0);
-        demonArray[178] = new Demon("カルティケーヤ", 80, ENUMSpecies.Hakaishin, 0);
-        demonArray[179] = new Demon("ブラックマリア", 80, ENUMSpecies.Jiboshin, 0);
-        demonArray[180] = new Demon("リリス", 80, ENUMSpecies.Yama, 1);
-        demonArray[181] = new Demon("ファフニール", 81, ENUMSpecies.Jaryu, 1);
-        demonArray[182] = new Demon("じゃあくフロスト", 81, ENUMSpecies.Jaki, 1);
-        demonArray[183] = new Demon("クー・フーリン", 81, ENUMSpecies.Genma, 1);
-        demonArray[184] = new Demon("異世界クー・フーリン", 81, ENUMSpecies.Genma, 0);
-        demonArray[185] = new Demon("ネビロス", 81, ENUMSpecies.Datenshi, 0);
-        demonArray[186] = new Demon("ヘカーテ", 81, ENUMSpecies.Mao, 0);
-        demonArray[187] = new Demon("イシュタル", 82, ENUMSpecies.Megami, 1);
-        demonArray[188] = new Demon("スサノオ", 82, ENUMSpecies.Hakaishin, 1);
-        demonArray[189] = new Demon("フラロウス", 82, ENUMSpecies.Datenshi, 0);
-        demonArray[190] = new Demon("アマテラス", 82, ENUMSpecies.Majin, 1);
-        demonArray[191] = new Demon("ラケシス", 82, ENUMSpecies.Kijo, 0);
-        demonArray[192] = new Demon("異世界スサノオ", 82, ENUMSpecies.Hakaishin, 0);
-        demonArray[193] = new Demon("トール", 83, ENUMSpecies.Kijin, 1);
-        demonArray[194] = new Demon("アナンタ", 83, ENUMSpecies.Ryuo, 1);
-        demonArray[195] = new Demon("マンセマット", 83, ENUMSpecies.Daitenshi, 1);
-        demonArray[196] = new Demon("スルト", 83, ENUMSpecies.Mao, 1);
-        demonArray[197] = new Demon("アシェラト", 83, ENUMSpecies.Jiboshin, 1);
-        demonArray[198] = new Demon("デモニホ", 84, ENUMSpecies.Yose, 0);
-        demonArray[199] = new Demon("フレスベルグ", 84, ENUMSpecies.Kyocho, 1);
-        demonArray[200] = new Demon("セト", 84, ENUMSpecies.Jashin, 1);
-        demonArray[201] = new Demon("アトロポス", 84, ENUMSpecies.Kijo, 0);
-        demonArray[202] = new Demon("バロン", 84, ENUMSpecies.Shinju, 1);
-        demonArray[203] = new Demon("アタバク", 84, ENUMSpecies.Majin, 0);
-        demonArray[204] = new Demon("サマエル", 84, ENUMSpecies.Datenshi, 1);
-        demonArray[205] = new Demon("アザゼル", 84, ENUMSpecies.Mao, 0);
-        demonArray[206] = new Demon("アナト", 84, ENUMSpecies.Megami, 0);
-        demonArray[207] = new Demon("ベリアル", 85, ENUMSpecies.Mao, 0);
-        demonArray[208] = new Demon("キュベレ", 85, ENUMSpecies.Jiboshin, 0);
-        demonArray[209] = new Demon("ラクシュミ", 85, ENUMSpecies.Megami, 1);
-        demonArray[210] = new Demon("ハニエル", 85, ENUMSpecies.Daitenshi, 0);
-        demonArray[211] = new Demon("ザオウゴンゲン", 85, ENUMSpecies.Hakaishin, 1);
-        demonArray[212] = new Demon("異世界ラクシュミ", 85, ENUMSpecies.Megami, 0);
-        demonArray[213] = new Demon("ノルン", 86, ENUMSpecies.Megami, 0);
-        demonArray[214] = new Demon("マーヤー", 86, ENUMSpecies.Yama, 0);
-        demonArray[215] = new Demon("ヴァスキ", 86, ENUMSpecies.Jaryu, 1);
-        demonArray[216] = new Demon("バアル", 86, ENUMSpecies.Majin, 0);
-        demonArray[217] = new Demon("ウリエル", 86, ENUMSpecies.Daitenshi, 0);
-        demonArray[218] = new Demon("セイオウボ", 86, ENUMSpecies.Jiboshin, 0);
-        demonArray[219] = new Demon("ラファエル", 87, ENUMSpecies.Daitenshi, 0);
-        demonArray[220] = new Demon("ガブリエル", 88, ENUMSpecies.Daitenshi, 0);
-        demonArray[221] = new Demon("コウリュウ", 88, ENUMSpecies.Ryujin, 1);
-        demonArray[222] = new Demon("イザナミ", 89, ENUMSpecies.Megami, 1);
-        demonArray[223] = new Demon("カーリー", 89, ENUMSpecies.Jiboshin, 0);
-        demonArray[224] = new Demon("ミカエル", 90, ENUMSpecies.Daitenshi, 1);
-        demonArray[225] = new Demon("マリシテン", 90, ENUMSpecies.Kijin, 0);
-        demonArray[226] = new Demon("マーラ", 90, ENUMSpecies.Mao, 1);
-        demonArray[227] = new Demon("ルキフグス", 92, ENUMSpecies.Mao, 0);
-        demonArray[228] = new Demon("シヴァ", 93, ENUMSpecies.Hakaishin, 1);
-        demonArray[229] = new Demon("ヴィローシャナ", 93, ENUMSpecies.Majin, 0);
-        demonArray[230] = new Demon("異世界シヴァ", 93, ENUMSpecies.Hakaishin, 0);
-        demonArray[231] = new Demon("セラフ", 95, ENUMSpecies.Daitenshi, 0);
-        demonArray[232] = new Demon("アルダー", 95, ENUMSpecies.Majin, 0);
-        demonArray[233] = new Demon("アンリ・マンユ", 96, ENUMSpecies.Mao, 0);
-        demonArray[234] = new Demon("ヴィシュヌ", 97, ENUMSpecies.Majin, 1);
-        demonArray[235] = new Demon("ルシファー", 98, ENUMSpecies.Mao, 1);
-        demonArray[236] = new Demon("メタトロン", 99, ENUMSpecies.Daitenshi, 1);
+        demonArray[1] = new Demon(1, "スライム", 1, ENUMSpecies.Gedo, 1);
+        demonArray[2] = new Demon(2, "ピクシー", 2, ENUMSpecies.Yose, 1);
+        demonArray[3] = new Demon(3, "アズミ", 3, ENUMSpecies.Yoki, 1);
+        demonArray[4] = new Demon(4, "カーシー", 3, ENUMSpecies.Maju, 1);
+        demonArray[5] = new Demon(5, "ガキ", 4, ENUMSpecies.Yuki, 1);
+        demonArray[6] = new Demon(6, "チャグリン", 4, ENUMSpecies.Yoju, 1);
+        demonArray[7] = new Demon(7, "メルコム", 4, ENUMSpecies.Datenshi, 1);
+        demonArray[8] = new Demon(8, "モコイ", 5, ENUMSpecies.Yama, 1);
+        demonArray[9] = new Demon(9, "アガシオン", 5, ENUMSpecies.Youma, 1);
+        demonArray[10] = new Demon(10, "コッパテング", 7, ENUMSpecies.Youma, 1);
+        demonArray[11] = new Demon(11, "オバリヨン", 7, ENUMSpecies.Yuki, 1);
+        demonArray[12] = new Demon(12, "ジャックフロスト", 7, ENUMSpecies.Yose, 1);
+        demonArray[13] = new Demon(13, "イヌガミ", 9, ENUMSpecies.Maju, 1);
+        demonArray[14] = new Demon(14, "バイコーン", 9, ENUMSpecies.Yoju, 1);
+        demonArray[15] = new Demon(15, "ザントマン", 10, ENUMSpecies.Yama, 1);
+        demonArray[16] = new Demon(16, "ファントム", 10, ENUMSpecies.Gedo, 1);
+        demonArray[17] = new Demon(17, "エリゴール", 10, ENUMSpecies.Datenshi, 1);
+        demonArray[18] = new Demon(18, "アプサラス", 11, ENUMSpecies.Youma, 1);
+        demonArray[19] = new Demon(19, "グレムリン", 11, ENUMSpecies.Jaki, 1);
+        demonArray[20] = new Demon(20, "コロポックル", 12, ENUMSpecies.Tirei, 1);
+        demonArray[21] = new Demon(21, "リャナンシー", 12, ENUMSpecies.Kijo, 1);
+        demonArray[22] = new Demon(22, "ジャックランタン", 13, ENUMSpecies.Yose, 1);
+        demonArray[23] = new Demon(23, "ネコマタ", 14, ENUMSpecies.Maju, 1);
+        demonArray[24] = new Demon(24, "ノズチ", 15, ENUMSpecies.Ryuo, 1);
+        demonArray[25] = new Demon(25, "モムノフ", 15, ENUMSpecies.Yoki, 1);
+
+        demonArray[26] = new Demon(26, "ブロブ", 20, ENUMSpecies.Gedo, 1);
+        demonArray[27] = new Demon(27, "ライジュウ", 20, ENUMSpecies.Yoju, 1);
+        demonArray[28] = new Demon(28, "モウリョウ", 20, ENUMSpecies.Yuki, 1);
+        demonArray[29] = new Demon(29, "エンジェル", 20, ENUMSpecies.Tenshi, 1);
+        demonArray[30] = new Demon(30, "カブソ", 20, ENUMSpecies.Maju, 0);
+
+        demonArray[31] = new Demon(31, "インキュバス", 21, ENUMSpecies.Yama, 1);
+        demonArray[32] = new Demon(32, "コダマ", 22, ENUMSpecies.Tirei, 1);
+        demonArray[33] = new Demon(33, "ジャック・リパー", 22, ENUMSpecies.Gedo, 0);
+        demonArray[34] = new Demon(34, "ヨモツシコメ", 23, ENUMSpecies.Kijo, 1);
+        demonArray[35] = new Demon(35, "デカラビア", 23, ENUMSpecies.Datenshi, 1);
+        demonArray[36] = new Demon(36, "ハイピクシー", 24, ENUMSpecies.Yose, 1);
+        demonArray[37] = new Demon(37, "ハンサ", 24, ENUMSpecies.Reicho, 1);
+        demonArray[38] = new Demon(38, "アークエンジェル", 25, ENUMSpecies.Tenshi, 1);
+        demonArray[39] = new Demon(39, "ブラックウーズ", 25, ENUMSpecies.Gedo, 1);
+        demonArray[40] = new Demon(40, "ヌエ", 25, ENUMSpecies.Yoju, 1);
+
+
+        demonArray[41] = new Demon(41, "ピシャーチャ", 26, ENUMSpecies.Yuki, 1);
+        demonArray[42] = new Demon(42, "アブラクサス", 26, ENUMSpecies.Jashin, 1);
+        demonArray[43] = new Demon(43, "イッポンダタラ", 26, ENUMSpecies.Jaki, 1);
+        demonArray[44] = new Demon(44, "ハトホル", 27, ENUMSpecies.Megami, 1);
+        demonArray[45] = new Demon(45, "ヘケト", 27, ENUMSpecies.Seiju, 1);
+        demonArray[46] = new Demon(46, "クラマテング", 27, ENUMSpecies.Genma, 1);
+        demonArray[47] = new Demon(47, "タケミナカタ", 27, ENUMSpecies.Kijin, 1);
+        demonArray[48] = new Demon(48, "オニ", 27, ENUMSpecies.Yoki, 1);
+        demonArray[49] = new Demon(49, "スパルナ", 28, ENUMSpecies.Reicho, 1);
+        demonArray[50] = new Demon(50, "ナーガ", 28, ENUMSpecies.Ryuo, 1);
+
+        demonArray[51] = new Demon(51, "フォーモリア", 30, ENUMSpecies.Yama, 1);
+        demonArray[52] = new Demon(52, "ナジャ", 30, ENUMSpecies.Yose, 0);
+
+        demonArray[53] = new Demon(53, "シーサー", 33, ENUMSpecies.Shinju, 1);
+        demonArray[54] = new Demon(54, "ヤクシニー", 34, ENUMSpecies.Kijo, 1);
+        demonArray[55] = new Demon(55, "レギオン", 34, ENUMSpecies.Yuki, 1);
+        demonArray[56] = new Demon(56, "ディース", 34, ENUMSpecies.Youma, 1);
+        demonArray[57] = new Demon(57, "オルトロス", 35, ENUMSpecies.Maju, 1);
+        demonArray[58] = new Demon(58, "ケルピー", 35, ENUMSpecies.Yose, 1);
+        demonArray[59] = new Demon(59, "パトリムパス", 35, ENUMSpecies.Ryujin, 1);
+        demonArray[60] = new Demon(60, "シャドウ", 35, ENUMSpecies.Gedo, 1);
+        demonArray[61] = new Demon(61, "プリンシパリティ", 35, ENUMSpecies.Tenshi, 1);
+
+        demonArray[62] = new Demon(62, "パワー", 40, ENUMSpecies.Tenshi, 1);
+        demonArray[63] = new Demon(63, "カハク", 40, ENUMSpecies.Tirei, 1);
+        demonArray[64] = new Demon(64, "ペレ", 40, ENUMSpecies.Jiboshin, 1);
+        demonArray[65] = new Demon(65, "ヴァルキリー", 40, ENUMSpecies.Youma, 1);
+
+        demonArray[66] = new Demon(66, "タム・リン", 40, ENUMSpecies.Genma, 1);
+        demonArray[67] = new Demon(67, "ヨモツイクサ", 41, ENUMSpecies.Yoki, 1);
+        demonArray[68] = new Demon(68, "ゾウチョウテン", 41, ENUMSpecies.Kijin, 1);
+        demonArray[69] = new Demon(69, "マカラ", 41, ENUMSpecies.Ryujin, 1);
+        demonArray[70] = new Demon(70, "マカミ", 41, ENUMSpecies.Shinju, 1);
+        demonArray[71] = new Demon(71, "バフォメット", 41, ENUMSpecies.Jashin, 1);
+        demonArray[72] = new Demon(72, "フォルネウス", 41, ENUMSpecies.Datenshi, 1);
+        demonArray[73] = new Demon(73, "モスマン", 41, ENUMSpecies.Yoju, 1);
+
+        demonArray[74] = new Demon(74, "ユニコーン", 42, ENUMSpecies.Seiju, 1);
+        demonArray[75] = new Demon(75, "カマソッソ", 42, ENUMSpecies.Kyocho, 1);
+        demonArray[76] = new Demon(76, "キウン", 42, ENUMSpecies.Yama, 1);
+        demonArray[77] = new Demon(77, "シルキー", 42, ENUMSpecies.Yose, 1);
+        demonArray[78] = new Demon(78, "マーメイド", 42, ENUMSpecies.Kijo, 1);
+
+        demonArray[79] = new Demon(79, "ライラ", 43, ENUMSpecies.Daitenshi, 1);
+        demonArray[80] = new Demon(80, "ラフィン・スカル", 44, ENUMSpecies.Yuki, 1);
+        demonArray[81] = new Demon(81, "アーマーン", 44, ENUMSpecies.Maju, 1);
+        demonArray[82] = new Demon(82, "アピス", 44, ENUMSpecies.Seiju, 1);
+        demonArray[83] = new Demon(83, "アレス", 44, ENUMSpecies.Hakaishin, 1);
+        demonArray[84] = new Demon(84, "ジャターユ", 44, ENUMSpecies.Reicho, 1);
+        demonArray[85] = new Demon(85, "アリアンロッド", 44, ENUMSpecies.Megami, 1);
+        demonArray[86] = new Demon(86, "マッドガッサー", 45, ENUMSpecies.Gedo, 1);
+        demonArray[87] = new Demon(87, "ゲンブ", 45, ENUMSpecies.Ryuo, 1);
+        demonArray[88] = new Demon(88, "オーカス", 46, ENUMSpecies.Mao, 1);
+        demonArray[89] = new Demon(89, "カワンチャ", 46, ENUMSpecies.Tirei, 1);
+        demonArray[90] = new Demon(90, "ピアレイ", 46, ENUMSpecies.Yoju, 1);
+        demonArray[91] = new Demon(91, "クシナダヒメ", 47, ENUMSpecies.Jiboshin, 1);
+        demonArray[92] = new Demon(92, "ヴァーチャー", 47, ENUMSpecies.Tenshi, 1);
+        demonArray[93] = new Demon(93, "セタンタ", 47, ENUMSpecies.Yose, 1);
+        demonArray[94] = new Demon(94, "イルルヤンカシュ", 47, ENUMSpecies.Ryujin, 1);
+        demonArray[95] = new Demon(95, "リリム", 47, ENUMSpecies.Yama, 1);
+        demonArray[96] = new Demon(96, "ビャッコ", 48, ENUMSpecies.Seiju, 1);
+        demonArray[97] = new Demon(97, "キマイラ", 49, ENUMSpecies.Shinju, 1);
+        demonArray[98] = new Demon(98, "クルースニク", 49, ENUMSpecies.Genma, 1);
+        demonArray[99] = new Demon(99, "シキオウジ", 49, ENUMSpecies.Yoki, 1);
+        demonArray[100] = new Demon(100, "ホルス", 49, ENUMSpecies.Majin, 1);
+        demonArray[101] = new Demon(101, "モー・ショボー", 49, ENUMSpecies.Kyocho, 1);
+        demonArray[102] = new Demon(102, "スカアハ", 50, ENUMSpecies.Megami, 1);
+        demonArray[103] = new Demon(103, "アラハバキ", 50, ENUMSpecies.Jashin, 1);
+        demonArray[104] = new Demon(104, "コウモクテン", 50, ENUMSpecies.Kijin, 1);
+        demonArray[105] = new Demon(105, "グレンデル", 51, ENUMSpecies.Jaki, 1);
+        demonArray[106] = new Demon(106, "イフリート", 52, ENUMSpecies.Youma, 1);
+        demonArray[107] = new Demon(107, "ダーキニー", 53, ENUMSpecies.Kijo, 1);
+        demonArray[108] = new Demon(108, "ドミニオン", 53, ENUMSpecies.Tenshi, 1);
+        demonArray[109] = new Demon(109, "スザク", 53, ENUMSpecies.Reicho, 1);
+        demonArray[110] = new Demon(110, "イシス", 54, ENUMSpecies.Jiboshin, 1);
+        demonArray[111] = new Demon(111, "ベルセルク", 54, ENUMSpecies.Yoki, 1);
+        demonArray[112] = new Demon(112, "オセ", 54, ENUMSpecies.Datenshi, 1);
+        demonArray[113] = new Demon(113, "ヴェータラ", 55, ENUMSpecies.Yuki, 1);
+        demonArray[114] = new Demon(114, "ミトラ", 55, ENUMSpecies.Majin, 1);
+
+        demonArray[115] = new Demon(115, "ティアマト", 58, ENUMSpecies.Jaryu, 1);
+        demonArray[116] = new Demon(116, "ティターン", 60, ENUMSpecies.Tirei, 1);
+        demonArray[117] = new Demon(117, "ハヌマーン", 60, ENUMSpecies.Genma, 1);
+        demonArray[118] = new Demon(118, "ソロネ", 60, ENUMSpecies.Tenshi, 1);
+        demonArray[119] = new Demon(119, "アバドン", 60, ENUMSpecies.Mao, 1);
+        demonArray[120] = new Demon(120, "キクリヒメ", 60, ENUMSpecies.Jiboshin, 1);
+        demonArray[121] = new Demon(121, "アンズー", 60, ENUMSpecies.Kyocho, 1);
+
+        demonArray[122] = new Demon(122, "パールヴァティ", 60, ENUMSpecies.Megami, 0);
+
+        demonArray[123] = new Demon(123, "異世界アバドン", 60, ENUMSpecies.Mao, 0);
+        demonArray[124] = new Demon(124, "異世界ネコマタ", 60, ENUMSpecies.Maju, 0);
+        demonArray[125] = new Demon(125, "ケルベロス", 61, ENUMSpecies.Maju, 1);
+        demonArray[126] = new Demon(126, "ヤマタノオロチ", 61, ENUMSpecies.Ryuo, 1);
+        demonArray[127] = new Demon(127, "セイテンタイセイ", 61, ENUMSpecies.Hakaishin, 1);
+        demonArray[128] = new Demon(128, "サンダルフォン", 61, ENUMSpecies.Daitenshi, 1);
+
+        demonArray[129] = new Demon(129, "ラクシャーサ", 61, ENUMSpecies.Jaki, 1);
+        demonArray[130] = new Demon(130, "フェンリル", 61, ENUMSpecies.Yoju, 1);
+        demonArray[131] = new Demon(131, "パズス", 62, ENUMSpecies.Jashin, 1);
+        demonArray[132] = new Demon(132, "ジコクテン", 62, ENUMSpecies.Kijin, 1);
+        demonArray[133] = new Demon(133, "スレイプニル", 62, ENUMSpecies.Seiju, 1);
+        demonArray[134] = new Demon(134, "ティターニア", 62, ENUMSpecies.Yose, 1);
+        demonArray[135] = new Demon(135, "パラスアテナ", 62, ENUMSpecies.Megami, 1);
+        demonArray[136] = new Demon(136, "サキュバス", 63, ENUMSpecies.Yama, 1);
+        demonArray[137] = new Demon(137, "おてつだいフロスト", 63, ENUMSpecies.Yose, 0);
+        demonArray[138] = new Demon(138, "セイリュウ", 63, ENUMSpecies.Ryujin, 1);
+
+        demonArray[139] = new Demon(139, "キングフロスト", 64, ENUMSpecies.Mao, 1);
+
+
+
+        demonArray[140] = new Demon(140, "トリック・ランタン", 65, ENUMSpecies.Yose, 0);
+        demonArray[141] = new Demon(141, "ミシャグジさま", 65, ENUMSpecies.Jashin, 0);
+
+        demonArray[142] = new Demon(142, "ガネーシャ", 66, ENUMSpecies.Youma, 1);
+        demonArray[143] = new Demon(143, "トラルテクトリ", 66, ENUMSpecies.Tirei, 1);
+        demonArray[144] = new Demon(144, "ヤタガラス", 66, ENUMSpecies.Reicho, 1);
+        demonArray[145] = new Demon(145, "アズラエル", 67, ENUMSpecies.Daitenshi, 1);
+        demonArray[146] = new Demon(146, "クドラク", 67, ENUMSpecies.Jaki, 1);
+        demonArray[147] = new Demon(147, "ツクヨミ", 67, ENUMSpecies.Genma, 1);
+        demonArray[148] = new Demon(148, "プロメテウス", 67, ENUMSpecies.Majin, 1);
+        demonArray[149] = new Demon(149, "オベロン", 67, ENUMSpecies.Yose, 1);
+        demonArray[150] = new Demon(150, "ランダ", 67, ENUMSpecies.Kijo, 1);
+        demonArray[151] = new Demon(151, "スカディ", 67, ENUMSpecies.Jiboshin, 1);
+        demonArray[152] = new Demon(152, "ギリメカラ", 67, ENUMSpecies.Jashin, 1);
+        demonArray[153] = new Demon(153, "オンギョウキ", 68, ENUMSpecies.Yoki, 1);
+        demonArray[154] = new Demon(154, "ベルゼブブ", 68, ENUMSpecies.Mao, 1);
+        demonArray[155] = new Demon(155, "グクマッツ", 69, ENUMSpecies.Ryujin, 1);
+        demonArray[156] = new Demon(156, "サラスヴァティ", 69, ENUMSpecies.Megami, 1);
+        demonArray[157] = new Demon(157, "ホクトセイクン", 69, ENUMSpecies.Hakaishin, 1);
+
+        demonArray[158] = new Demon(158, "ダンタリアン", 70, ENUMSpecies.Datenshi, 1);
+        demonArray[159] = new Demon(159, "ビシャモンテン", 70, ENUMSpecies.Kijin, 1);
+
+
+
+        demonArray[160] = new Demon(160, "ユルング", 70, ENUMSpecies.Ryuo, 1);
+        demonArray[161] = new Demon(161, "アヌビス", 70, ENUMSpecies.Shinju, 1);
+
+
+        demonArray[162] = new Demon(162, "グルル", 71, ENUMSpecies.Kyocho, 1);
+
+        demonArray[163] = new Demon(163, "ニーズホッグ", 72, ENUMSpecies.Jaryu, 1);
+        demonArray[164] = new Demon(164, "オーディン", 73, ENUMSpecies.Majin, 1);
+
+        demonArray[165] = new Demon(165, "ヘカトンケイル", 74, ENUMSpecies.Jaki, 1);
+
+
+        demonArray[166] = new Demon(166, "ショウキ", 75, ENUMSpecies.Kijin, 1);
+        demonArray[167] = new Demon(167, "ロキ", 75, ENUMSpecies.Mao, 1);
+        demonArray[168] = new Demon(168, "スフィンクス", 76, ENUMSpecies.Seiju, 1);
+        demonArray[169] = new Demon(169, "ヤム", 77, ENUMSpecies.Jaryu, 1);
+
+
+        demonArray[170] = new Demon(170, "ケツアルカトル", 80, ENUMSpecies.Ryujin, 1);
+
+        demonArray[171] = new Demon(171, "ツィツィミトル", 80, ENUMSpecies.Mao, 0);
+
+
+        demonArray[172] = new Demon(172, "フロストエース", 80, ENUMSpecies.Genma, 0);
+        demonArray[173] = new Demon(173, "クロト", 80, ENUMSpecies.Kijo, 0);
+        demonArray[174] = new Demon(174, "異世界ガルーダ", 80, ENUMSpecies.Reicho, 0);
+        demonArray[175] = new Demon(175, "ゴグマゴグ", 80, ENUMSpecies.Tirei, 1);
+        demonArray[176] = new Demon(176, "ガルーダ", 80, ENUMSpecies.Reicho, 1);
+        demonArray[177] = new Demon(177, "異世界ケツアルカトル", 80, ENUMSpecies.Ryujin, 0);
+        demonArray[178] = new Demon(178, "カルティケーヤ", 80, ENUMSpecies.Hakaishin, 0);
+        demonArray[179] = new Demon(179, "ブラックマリア", 80, ENUMSpecies.Jiboshin, 0);
+        demonArray[180] = new Demon(180, "リリス", 80, ENUMSpecies.Yama, 1);
+
+
+
+        demonArray[181] = new Demon(181, "ファフニール", 81, ENUMSpecies.Jaryu, 1);
+        demonArray[182] = new Demon(182, "じゃあくフロスト", 81, ENUMSpecies.Jaki, 1);
+        demonArray[183] = new Demon(183, "クー・フーリン", 81, ENUMSpecies.Genma, 1);
+        demonArray[184] = new Demon(184, "異世界クー・フーリン", 81, ENUMSpecies.Genma, 0);
+        demonArray[185] = new Demon(185, "ネビロス", 81, ENUMSpecies.Datenshi, 0);
+        demonArray[186] = new Demon(186, "ヘカーテ", 81, ENUMSpecies.Mao, 0);
+
+
+        demonArray[187] = new Demon(187, "イシュタル", 82, ENUMSpecies.Megami, 1);
+        demonArray[188] = new Demon(188, "スサノオ", 82, ENUMSpecies.Hakaishin, 1);
+        demonArray[189] = new Demon(189, "フラロウス", 82, ENUMSpecies.Datenshi, 0);
+        demonArray[190] = new Demon(190, "アマテラス", 82, ENUMSpecies.Majin, 1);
+
+        demonArray[191] = new Demon(191, "ラケシス", 82, ENUMSpecies.Kijo, 0);
+        demonArray[192] = new Demon(192, "異世界スサノオ", 82, ENUMSpecies.Hakaishin, 0);
+        demonArray[193] = new Demon(193, "トール", 83, ENUMSpecies.Kijin, 1);
+        demonArray[194] = new Demon(194, "アナンタ", 83, ENUMSpecies.Ryuo, 1);
+        demonArray[195] = new Demon(195, "マンセマット", 83, ENUMSpecies.Daitenshi, 1);
+        demonArray[196] = new Demon(196, "スルト", 83, ENUMSpecies.Mao, 1);
+
+        demonArray[197] = new Demon(197, "アシェラト", 83, ENUMSpecies.Jiboshin, 1);
+
+
+        demonArray[198] = new Demon(198, "デモニホ", 84, ENUMSpecies.Yose, 0);
+        demonArray[199] = new Demon(199, "フレスベルグ", 84, ENUMSpecies.Kyocho, 1);
+        demonArray[200] = new Demon(200, "セト", 84, ENUMSpecies.Jashin, 1);
+        demonArray[201] = new Demon(201, "アトロポス", 84, ENUMSpecies.Kijo, 0);
+        demonArray[202] = new Demon(202, "バロン", 84, ENUMSpecies.Shinju, 1);
+        demonArray[203] = new Demon(203, "アタバク", 84, ENUMSpecies.Majin, 0);
+        demonArray[204] = new Demon(204, "サマエル", 84, ENUMSpecies.Datenshi, 1);
+
+        demonArray[205] = new Demon(205, "アザゼル", 84, ENUMSpecies.Mao, 0);
+        demonArray[206] = new Demon(206, "アナト", 84, ENUMSpecies.Megami, 0);
+
+
+        demonArray[207] = new Demon(207, "ベリアル", 85, ENUMSpecies.Mao, 0);
+        demonArray[208] = new Demon(208, "キュベレ", 85, ENUMSpecies.Jiboshin, 0);
+
+        demonArray[209] = new Demon(209, "ラクシュミ", 85, ENUMSpecies.Megami, 1);
+        demonArray[210] = new Demon(210, "ハニエル", 85, ENUMSpecies.Daitenshi, 0);
+
+        demonArray[211] = new Demon(211, "ザオウゴンゲン", 85, ENUMSpecies.Hakaishin, 1);
+
+
+        demonArray[212] = new Demon(212, "異世界ラクシュミ", 85, ENUMSpecies.Megami, 0);
+        demonArray[213] = new Demon(213, "ノルン", 86, ENUMSpecies.Megami, 0);
+        demonArray[214] = new Demon(214, "マーヤー", 86, ENUMSpecies.Yama, 0);
+        demonArray[215] = new Demon(215, "ヴァスキ", 86, ENUMSpecies.Jaryu, 1);
+        demonArray[216] = new Demon(216, "バアル", 86, ENUMSpecies.Majin, 0);
+        demonArray[217] = new Demon(217, "ウリエル", 86, ENUMSpecies.Daitenshi, 0);
+        demonArray[218] = new Demon(218, "?セイオウボ", 86, ENUMSpecies.Jiboshin, 0);
+
+        demonArray[219] = new Demon(219, "ラファエル", 87, ENUMSpecies.Daitenshi, 0);
+        demonArray[220] = new Demon(220, "ガブリエル", 88, ENUMSpecies.Daitenshi, 0);
+        demonArray[221] = new Demon(221, "コウリュウ", 88, ENUMSpecies.Ryujin, 1);
+
+
+        demonArray[222] = new Demon(222, "イザナミ", 89, ENUMSpecies.Megami, 1);
+        demonArray[223] = new Demon(223, "カーリー", 89, ENUMSpecies.Jiboshin, 0);
+
+
+        demonArray[224] = new Demon(224, "ミカエル", 90, ENUMSpecies.Daitenshi, 1);
+
+        demonArray[225] = new Demon(225, "マリシテン", 90, ENUMSpecies.Kijin, 0);
+        demonArray[226] = new Demon(226, "マーラ", 90, ENUMSpecies.Mao, 1);
+
+
+
+
+        demonArray[227] = new Demon(227, "ルキフグス", 92, ENUMSpecies.Mao, 0);
+
+
+        demonArray[228] = new Demon(228, "シヴァ", 93, ENUMSpecies.Hakaishin, 1);
+        demonArray[229] = new Demon(229, "ヴィローシャナ", 93, ENUMSpecies.Majin, 0);
+        demonArray[230] = new Demon(230, "異世界シヴァ", 93, ENUMSpecies.Hakaishin, 0);
+
+        demonArray[231] = new Demon(231, "セラフ", 95, ENUMSpecies.Daitenshi, 0);
+
+        demonArray[232] = new Demon(232, "アルダー", 95, ENUMSpecies.Majin, 0);
+
+        demonArray[233] = new Demon(233, "アンリ・マンユ", 96, ENUMSpecies.Mao, 0);
+        demonArray[234] = new Demon(234, "ヴィシュヌ", 97, ENUMSpecies.Majin, 1);
+
+        demonArray[235] = new Demon(235, "ルシファー", 98, ENUMSpecies.Mao, 1);
+
+        demonArray[236] = new Demon(236, "メタトロン", 99, ENUMSpecies.Daitenshi, 1);
 
 
         // 種族別悪魔リスト
         var DemonListBySpecies = [];
-        // 初期化
-        for (let key in ENUMSpecies) {
-            let value = ENUMSpecies[key];
-            if (value == -1) {
-                continue;
-            }
-            //document.write("<p>" + key + ", "+ value + "</p>");
-            DemonListBySpecies[value] = [];
-        }
 
-        //　種族別悪魔リストに悪魔追加
-        for (let value of demonArray) {
-            if (value == undefined) {
-                //document.write("<p>undefined!</p>");
-                continue;
-            }
-            //document.write("<p>" + value.Name + ", " + value.Species + "</p>");
-            DemonListBySpecies[value.Species].push(value);
-        }
-
-        //　種族別悪魔リストをグレードでソート
-        for (let key in ENUMSpecies) {
-            let value = ENUMSpecies[key];
-            if (value == -1) {
-                continue;
-            }
-            //document.write("<p>" + key + ", "+ value + "</p>");
-            DemonListBySpecies[value].sort(function (a, b) {
-                if (a.Grade < b.Grade) {
-                    return -1;
-                }
-                if (a.Grade > b.Grade) {
-                    return 1;
-                }
-                return 0;
-            })
-        }
-
-        for (let value of DemonListBySpecies[ENUMSpecies.Megami]) {
-            if (value == undefined) {
-                //document.write("<p>undefined!</p>");
-                continue;
-            }
-            document.write("<p>" + value.Name + "</p>");
-        }
-
+        //　悪魔合体後の悪魔を返す。合体できない場合はundefinedを返す。
         function DemonFusion(demon1, demon2) {
-            document.write("Function DemonFusion: " + demon1.Name + " & " + demon2.Name);
+            //console.log("Function DemonFusion: " + demon1.Name + " & " + demon2.Name);
             var grade = Math.floor((demon1.Grade + demon2.Grade) / 2) + 1;
-            document.write("<p>" + demon1.Species + "," + demon2.Species + "</p>");
+            //console.log("<p>" + demon1.Species + "," + demon2.Species + "</p>");
             var species = FusionSpeciesRule[demon1.Species][demon2.Species];
+            if (species == ENUMSpecies.NoValue) {
+                return undefined;
+            }
             var i, fusionDemon;
+            //console.log("<p>Species=" + species + "</p>");
             for (i = 0; i < DemonListBySpecies[species].length; i++) {
                 let value = DemonListBySpecies[species][i];
                 if (value == undefined) {
-                    //document.write("<p>undefined!</p>");
+                    //console.log("<p>undefined!</p>");
                     continue;
                 }
                 if (value.FlagFusionMade == 0) {
                     continue;
                 }
-                document.write("<p>" + value.Name + "</p>");
+                //console.log("<p>" + value.Name + "</p>");
                 if (value.Grade >= grade) {
-                    document.write("<p>Break!</p>");
+                    //console.log("<p>Break!</p>");
                     fusionDemon = value;
                     break;
                 }
             }
+
+            if (fusionDemon != undefined) {
+                if (((calcStarGrade(demon1.Grade)) == 5 || (calcStarGrade(demon2.Grade) == 5)) &&
+                    (calcStarGrade(fusionDemon.Grade) < 5)) {
+                    // 合体制限ルール1: ☆5悪魔は、☆が下がる合体はしない
+                    fusionDemon = undefined;
+                } else if (((calcStarGrade(demon1.Grade)) == 4 || (calcStarGrade(demon2.Grade) == 4)) &&
+                    (calcStarGrade(fusionDemon.Grade) < 4)) {
+                    // 合体制限ルール2: ☆4悪魔は、☆が下がる合体はしない
+                    fusionDemon = undefined;
+                }
+            }
+
             return fusionDemon;
         }
+
+
+        function DemonPair(demon1, demon2) {
+            var demon1;
+            var demon2;
+            this.demon1 = demon1;
+            this.demon2 = demon2;
+        }
+
+        // 悪魔合体逆引き表
+        var ReverseFusionArray = [];
+
+
 
         // 合体の基本コスト [合体元1☆][合体元2☆][合体後☆]
         var FusionMagCostBase = [];
         FusionMagCostBase[1] = [[], [0, 5, 50, 5400], [0, 25, 25, 5200], [0, 0, 5, 5000], [0, 0, 5, 2500, 320000], [0, 0, 0, 500, 300000]];
-        FusionMagCostBase[2] = [[], [], [0, 0, 5, 5000], [0, 0, 5, 2500, 320000], [0, 0, 0, 500, 300000]];
+        FusionMagCostBase[2] = [[], [], [0, 0, 5, 5000], [0, 0, 5, 2500, 320000], [0, 0, 0, 500, 300000], [0, 0, 0, 0, 150000, 4200000]];
         FusionMagCostBase[3] = [[], [], [], [0, 0, 0, 500, 300000], [0, 0, 0, 250, 150000, 4200000], [0, 0, 0, 0, 6000, 3000000]];
         FusionMagCostBase[4] = [[], [], [], [], [0, 0, 0, 0, 6000, 3000000], [0, 0, 0, 0, 3000, 1500000]];
         FusionMagCostBase[5] = [[], [], [], [], [], [0, 0, 0, 0, 0, 60000]];
@@ -1294,50 +1390,788 @@
 
         // flagSotai: 0->アーキタイプあり、1->素体同士
         function calcFusionMagCost(demon1, demon2, flagSotai) {
-            document.write("Function calcFusionMagCost: " + demon1.Name + " & " + demon2.Name);
-            if (demon1.grade > demon2.grade) {
+            //console.log("<p>Function calcFusionMagCost: " + demon1.Name + " & " + demon2.Name+"</p>");
+            if (demon1.Grade > demon2.Grade) {
                 let tmp = demon1;
                 demon1 = demon2;
                 demon2 = tmp;
             }
+            //console.log("<p>Function calcFusionMagCost:: " + demon1.Name + " & " + demon2.Name+"</p>");
 
             var fusionedDemon = DemonFusion(demon1, demon2);
-            if(fusionedDemon == undefined){
+            if (fusionedDemon == undefined) {
                 return -1;
             }
             var starGrade1 = calcStarGrade(demon1.Grade);
             var starGrade2 = calcStarGrade(demon2.Grade);
             var starGradeFusioned = calcStarGrade(fusionedDemon.Grade);
-            document.write("<p>stargrade " + starGrade1 + ", "+ starGrade2 + ", " + starGradeFusioned + ", "+FusionMagCostBase[starGrade1][starGrade2][starGradeFusioned]+"</p>");
+            //console.log("<p>Function calcFusionMagCost: stargrade " + starGrade1 + ", " + starGrade2 + ", " + starGradeFusioned + ", " + FusionMagCostBase[starGrade1][starGrade2][starGradeFusioned] + "</p>");
+            /*
+            if ((demon1.Grade == 23) && (demon2.Grade == 28)) {
+                console.log("<p>Function calcFusionMagCost: stargrade " + starGrade1 + ", " + starGrade2 + ", " + starGradeFusioned + ", " + FusionMagCostBase[starGrade1][starGrade2][starGradeFusioned] + ", " + fusionedDemon.Name + "</p>");
+            }
+            */
+            //console.log("<p>Function calcFusionMagCost: stargrade " + starGrade1 + ", " + starGrade2 + ", " + starGradeFusioned + ", Grade="+fusionedDemon.Grade+", Name="+fusionedDemon.Name + "</p>");
             var magCost = FusionMagCostBase[starGrade1][starGrade2][starGradeFusioned] + (fusionedDemon.Grade - (demon1.Grade + demon2.Grade) / 2) * FusionMagCostGrade[Math.floor(fusionedDemon.Grade / 10)];
             if (flagSotai == 0) {
-                return magCost;
+                return Math.floor(magCost);
             } else if (flagSotai == 1) {
-                return magCost * 0.5;
+                if (starGradeFusioned == 4) {
+                    return Math.floor(magCost * 0.5);
+                } else if (starGradeFusioned == 5) {
+                    return Math.floor(magCost * 0.7);
+                } else {
+                    return Math.floor(magCost);
+                }
             } else {
                 return -1;
             }
         }
 
-        function FusonTreeNode() {
-            var demon;
-            var alpha;
-            var fusionNodeArray;
+        /*
+                var fusionDemon = DemonFusion(demonArray[210], demonArray[225]);
+                if (fusionDemon == undefined) {
+                    console.log("<p>Fusion Failed</p>");
+                } else {
+                    console.log("<p>Fusioned Demon: " + fusionDemon.Name + "</p>");
+                }
+        
+                //var magCost = calcFusionMagCost(demonArray[100], demonArray[161],0);
+                var magCost = calcFusionMagCost(demonArray[108], demonArray[82], 1);
+                console.log("<p>Mag Cost: " + magCost + "</p>");
+        */
+
+        //　合体の結果、各悪魔が最低コストで作ることができる合体の組み合わせ・マグコスト
+        var FusionResult = function (sourceDemon1, sourceDemon2, sourceDemon1ArrayID, sourceDemon2ArrayID, magCost) {
+            var sourceDemon1, sourceDemon2, sourceDemon1ArrayID, sourceDemon2ArrayID, magCost;
+
+            this.sourceDemon1 = sourceDemon1;
+            this.sourceDemon2 = sourceDemon2;
+            this.sourceDemon1ArrayID = sourceDemon1ArrayID;
+            this.sourceDemon2ArrayID = sourceDemon2ArrayID;
+            this.magCost = magCost;
+        }
+
+        var FusionResultArraySotai = [];
+        var FusionResultArrayAragami = [];
+        var FusionResultArrayKago = [];
+        var FusionResultArrayIno = [];
+        var FusionResultArrayBoma = [];
+
+        var FusionResults = [];
+
+        function initializeFusionResultArray(resultArray) {
+            for (var i = 0; i < demonArray.length; i++) {
+                var demon = demonArray[i];
+                if (demon == undefined) {
+                    continue;
+                }
+
+                resultArray[i] = new FusionResult(undefined, undefined, undefined, undefined, undefined);
+            }
         }
 
 
-        var fusionDemon = DemonFusion(demonArray[210], demonArray[225]);
-        if (fusionDemon == undefined) {
-            document.write("<p>Fusion Failed</p>");
-        } else {
-            document.write("<p>Fusioned Demon: " + fusionDemon.Name + "</p>");
+        function copyFusionResult(newResultArray, oldResultArray) {
+            for (var i = 0; i < demonArray.length; i++) {
+                var demon = demonArray[i];
+                if (demon == undefined) {
+                    continue;
+                }
+                newResultArray[i] = oldResultArray[i];
+            }
         }
 
-        //var magCost = calcFusionMagCost(demonArray[100], demonArray[161],0);
-        var magCost = calcFusionMagCost(demonArray[108], demonArray[82],1);
-        document.write("<p>Mag Cost: " + magCost + "</p>");
+        // 2つの合成結果リスト同士の合体組み合わせを計算し、合成後の合体結果リストを作成する
+        // sourceFusionResultArray1 X sourceFusionResultArray2 -> resultFusionResultArray
+        // resultFusionResultArrayは、最初にsourceFusionResultArray1をコピーし、各合成結果悪魔について、今の値よりもmagCostが小さく作れるなら反映する。
+        // 1つでも反映できればresultFusionResultArrayを返す。1つも反映が無ければundefinedを返す（合成の結果、変化なし）
+        function calcFusionResult(sourceFusionResultArray1, sourceFusionResultArray2, sourceDemon1ArrayID, sourceDemon2ArrayID) {
+            var currentDate = new Date();
+            console.log("<p>calcFusionResult ArrayID: " + sourceDemon1ArrayID + "," + sourceDemon2ArrayID + "</p>");
+            var setFlag = 0;
+            var resultFusionResultArray = [];
+            copyFusionResult(resultFusionResultArray, sourceFusionResultArray1);
+
+            /*
+            for (var i = 0; i < demonArray.length; i++) {
+                if (sourceFusionResultArray2[i] != undefined) {
+                    if ((sourceFusionResultArray1[i] == undefined) ||
+                        (sourceFusionResultArray1[i].magCost > sourceFusionResultArray2[i].magCost)) {
+                        resultFusionResultArray[i] = sourceFusionResultArray2[i];
+                    }
+                }
+          }
+*/
+
+            for (var i = 0; i < demonArray.length; i++) {
+                //for (var j = 0; j < i; j++) {
+                for (var j = 0; j < demonArray.length; j++) {
+                    //console.log("<p>FusionResultArray: (i,j) = " + i + ", " + j + "</p>");
+                    let sourceDemon1 = demonArray[i];
+                    let sourceDemon2 = demonArray[j];
+                    if ((sourceDemon1 == undefined) || (sourceDemon2 == undefined)) {
+                        //console.log("<p>FusionResultArray: sourceDemon is undefined</p>");    
+                        continue;
+                    }
+                    if ((sourceFusionResultArray1[sourceDemon1.ID].magCost == undefined) || (sourceFusionResultArray2[sourceDemon2.ID].magCost == undefined)) {
+                        continue;
+                    }
+
+                    //console.log("<p>FusionResultArray: " + sourceDemon1.Name + " + " + sourceDemon2.Name + "</p>");
+                    let resultDemon = DemonFusion(sourceDemon1, sourceDemon2);
+                    if (resultDemon == undefined) {
+                        continue;
+                    }
+                    //||(sourceDemon1.ID == 197&&sourceDemon2.ID==195)){
+
+                    let currentFusionResult = resultFusionResultArray[resultDemon.ID];
+                    let magCost = calcFusionMagCost(sourceDemon1, sourceDemon2, 0) + sourceFusionResultArray1[sourceDemon1.ID].magCost + sourceFusionResultArray2[sourceDemon2.ID].magCost;
+                    if (sourceDemon1.ID == 195 && sourceDemon2.ID == 197) {
+                        /*
+                        console.log("<p>FusionResultArray: マンセマット＋アシェラト : [" + sourceDemon1ArrayID + "] (" + sourceFusionResultArray1[sourceDemon1.ID].magCost + ") + "
+                            + "[" + sourceDemon2ArrayID + "] (" + sourceFusionResultArray2[sourceDemon2.ID].magCost + ")" + magCost + "</p>");
+                            */
+                    }
+                    //console.log("<p>FusionResultArray: magCost = " + magCost + "</p>");
+                    if ((currentFusionResult.magCost == undefined) || (magCost < currentFusionResult.magCost)) {
+                        /*
+                        console.log("<p>FusionResultArray: set FusionResult! : " + resultDemon.Name + " = " + sourceDemon1.Name + "[" + sourceDemon1ArrayID + "]"
+                            + " + " + sourceDemon2.Name + "[" + sourceDemon2ArrayID + "]" + ", " + magCost + ", FusionResults.lenth=" + FusionResults.length + "</p>");
+                            */
+                        resultFusionResultArray[resultDemon.ID] = new FusionResult(sourceDemon1, sourceDemon2, sourceDemon1ArrayID, sourceDemon2ArrayID, magCost);
+                        setFlag = 1;
+                    }
+                }
+            }
+
+            if (setFlag == 0) {
+                return undefined;
+            } else {
+                return resultFusionResultArray;
+            }
+        }
+
+        var FResultsIDList = [];
+
+        // 個数制限付き悪魔の合体結果を作成する
+        function calcFusionResultWithCondition(availableDemons) {
+            var availableDemonstmp = [];
+            var sourceFusionResultArray = [];
+            var FusionResultsCount = 0;
+
+            for (var i = 0; i < availableDemons.length; i++) {
+                availableDemonstmp[i] = availableDemons[i];
+            }
+
+            while (1) {
+                console.log("<p>calcFusionResultWithCondition while loop FusionResults.length=" + FusionResults.length + "</p>");
+                sourceFusionResultArray = [];
+                var setFlag;
+                setFlag = 0;
+                //for (var i = 0; i < demonArray.length; i++) {
+                for (var i = demonArray.length - 1; i >= 0; i--) {
+                    //console.log("<p>i="+i+", "+availableDemonstmp[i]+"</p>");
+                    if (availableDemonstmp[i] == -1) {
+                        sourceFusionResultArray[i] = new FusionResult(undefined, undefined, 0, 0, 0);
+                    } else if (availableDemonstmp[i] > 0) {
+                        if (setFlag == 0) {
+                            sourceFusionResultArray[i] = new FusionResult(undefined, undefined, 0, 0, 0);
+                            setFlag = 1;
+                            availableDemonstmp[i]--;
+                            console.log("<p>set Demon=" + demonArray[i].Name + "</p>");
+                        } else {
+                            //sourceFusionResultArray[i] = FusionResults[FusionResultsCount][i];
+                            sourceFusionResultArray[i] = FusionResults[0][i];
+                        }
+                    } else {
+                        //sourceFusionResultArray[i] = FusionResults[FusionResultsCount][i];
+                        sourceFusionResultArray[i] = FusionResults[0][i];
+                    }
+                }
+                if (setFlag == 0) {
+                    console.log("<p>calcFusionResultWithCondition setFlag is 0, going to break</p>");
+                    break;
+                }
+
+                FusionResults.push(sourceFusionResultArray);
+                FusionResultsCount++;
+
+                for (var i = 0; i < 100; i++) {
+                    result = calcFusionResult(FusionResults[FusionResultsCount], FusionResults[0], FusionResultsCount, 0);
+                    if (result == undefined) {
+                        break;
+                    } else {
+                        FusionResults.push(result);
+                        FusionResultsCount++;
+                    }
+                }
+                FResultsIDList.push(FusionResultsCount);
+            }
+
+            var currentDate = new Date();
+            console.log("<p>Start Time: " + currentDate + " " + currentDate.getMilliseconds() + "</p>");
+
+            FusionResults.push(FusionResults[FResultsIDList[0]]);
+            for (var i = 1; i < FResultsIDList.length; i++) {
+                let ResultsID1 = FResultsIDList[i];
+                let result = calcFusionResult(FusionResults[FusionResults.length - 1], FusionResults[ResultsID1], FusionResults.length - 1, ResultsID1);
+                if (result == undefined) {
+
+                    continue;
+                } else {
+                    FusionResults.push(result);
+                }
+                for (var j = 0; j < 100; j++) {
+                    result = calcFusionResult(FusionResults[FusionResults.length - 1], FusionResults[0], FusionResults.length - 1, 0);
+                    if (result == undefined) {
+                        break;
+                    } else {
+                        FusionResults.push(result);
+                    }
+                }
+
+            }
+            var currentDate = new Date();
+            console.log("<p>End Time: " + currentDate + " " + currentDate.getMilliseconds() + "</p>");
+
+        }
+
+        /*
+        function calcFusionResultWithCondition(availableDemons) {
+            var availableDemonstmp = [];
+            var sourceFusionResultArray = [];
+            var FusionResultsCount = 0;
+
+            for (var i = 0; i < availableDemons.length; i++) {
+                availableDemonstmp[i] = availableDemons[i];
+            }
+
+            while (1) {
+                console.log("<p>calcFusionResultWithCondition while loop FusionResults.length=" + FusionResults.length + "</p>");
+                sourceFusionResultArray = [];
+                var setFlag;
+                setFlag = 0;
+                for (var i = 0; i < demonArray.length; i++) {
+                    //console.log("<p>i="+i+", "+availableDemonstmp[i]+"</p>");
+                    if (availableDemonstmp[i] == -1) {
+                        sourceFusionResultArray[i] = new FusionResult(undefined, undefined, 0, 0, 0);
+                    } else if (availableDemonstmp[i] > 0) {
+                        if (setFlag == 0) {
+                            sourceFusionResultArray[i] = new FusionResult(undefined, undefined, 0, 0, 0);
+                            setFlag = 1;
+                            availableDemonstmp[i]--;
+                            console.log("<p>set Demon=" + demonArray[i].Name + "</p>");
+                        } else {
+                            //sourceFusionResultArray[i] = FusionResults[FusionResultsCount][i];
+                            sourceFusionResultArray[i] = FusionResults[0][i];
+                        }
+                    } else {
+                        //sourceFusionResultArray[i] = FusionResults[FusionResultsCount][i];
+                        sourceFusionResultArray[i] = FusionResults[0][i];
+                    }
+                }
+                if (setFlag == 0) {
+                    console.log("<p>calcFusionResultWithCondition setFlag is 0, going to break</p>");
+                    break;
+                }
+
+                FusionResults.push(sourceFusionResultArray);
+                FusionResultsCount++;
+                let result = calcFusionResult(FusionResults[FusionResultsCount - 1], sourceFusionResultArray, FusionResultsCount - 1, FusionResultsCount);
+                if (result == undefined) {
+                    console.log("<p>undefined111</p>");
+                    continue;
+                } else {
+                    FusionResults.push(result);
+                    FusionResultsCount++;
+                }
+
+                for (var i = 0; i < 100; i++) {
+                    result = calcFusionResult(FusionResults[FusionResultsCount], FusionResults[0], FusionResultsCount, 0);
+                    if (result == undefined) {
+                        break;
+                    } else {
+                        FusionResults.push(result);
+                        FusionResultsCount++;
+                    }
+                }
+
+            }
+        }
+*/
+
+        function Condition() {
+            var availableDemonsSotai;       // 添字がDemonID, 中身が-1: 無制限保持, 0: 保持していない(合体で作る必要あり), 1以上: 個数制限保持
+            var availableDemonsAragami;
+            var availableDemonsKago;
+            var availableDemonsIno;
+            var availableDemonsBoma;
+
+            this.availableDemonsSotai = [];
+            this.availableDemonsAragami = [];
+            this.availableDemonsKago = [];
+            this.availableDemonsIno = [];
+            this.availableDemonsBoma = [];
+        }
+
+        initializeFusionResultArray(FusionResultArraySotai);
+
+        function drawFusionResultTree(canvas, demonID, FusionResultCount) {
+            var context = canvas.getContext("2d");
+            //context.fillStyle = "rgb(0,0,192)";
+            //context.fillRect(0, 0, 64, 64);
+            canvas.width = 2000;
+            canvas.height = 2000;
+
+            var Yarray = [];
+            for (var i = 0; i < 20; i++) {
+                Yarray[i] = 50;
+            }
+
+            var fusionResult = FusionResultArraySotai[demonID];
+            if (fusionResult.magCost == undefined) {
+                canvas.width = 600;
+                canvas.height = 400;
+                context.font = "20px serif";
+                context.fillText("The demon can not be created by fusion under the given condition.", 10, 200);
+                return;
+            } else {
+                drawFusionResultTree2(canvas, demonID, FusionResultCount, 0, Yarray);
+            }
+        }
+
+        var widthOneDemon = 200;
+        function drawFusionResultTree2(canvas, demonID, fusionResultsCount, level, Yarray) {
+            var context = canvas.getContext("2d");
+            var fusionResult = FusionResults[fusionResultsCount][demonID];
+            if (fusionResult.magCost == undefined) {
+                console.log("<p>function drawFusionResultTree2: magCost is undefined" + "</p>");
+                return;
+            } else if (fusionResult.magCost == 0) {
+                context.fillStyle = "red";
+                context.font = "12px serif";
+                context.fillText(demonArray[demonID].Name + "[" + fusionResultsCount + "]", level * widthOneDemon, Yarray[level]);
+                var returnY = Yarray[level];
+                Yarray[level] += 20;
+                for (let i = 0; i < 20; i++) {
+                    Yarray[i] = Yarray[level];
+                }
+                return returnY;
+            } else {
+                var sourceDemon1 = fusionResult.sourceDemon1;
+                var sourceDemon2 = fusionResult.sourceDemon2;
+                var Y1 = drawFusionResultTree2(canvas, sourceDemon1.ID, fusionResult.sourceDemon1ArrayID, level + 1, Yarray);
+                var Y2 = drawFusionResultTree2(canvas, sourceDemon2.ID, fusionResult.sourceDemon2ArrayID, level + 1, Yarray);
+                context.fillStyle = "black";
+                context.font = "12px serif";
+                var returnY = (Y1 + Y2) / 2;
+                context.fillText(demonArray[demonID].Name + " (" + fusionResult.magCost + ") [" + fusionResultsCount + "]", level * widthOneDemon, returnY);
+                context.moveTo((level + 0.8) * widthOneDemon, returnY);
+                context.lineTo((level + 1) * widthOneDemon, Y1);
+                context.moveTo((level + 0.8) * widthOneDemon, returnY);
+                context.lineTo((level + 1) * widthOneDemon, Y2);
+                context.strokeStyle = "red";
+                context.lineWidth = 2;
+                context.stroke();
+                return returnY;
+            }
+        }
+
+        /*
+        function drawFusionResultTree2_old(canvas, demonID, level, Yarray) {
+            var context = canvas.getContext("2d");
+            var fusionResult = FusionResultArraySotai[demonID];
+            if (fusionResult.magCost == undefined) {
+                console.log("<p>function drawFusionResultTree2: magCost is undefined" + "</p>");
+                return;
+            } else if (fusionResult.magCost == 0) {
+                context.font = "12px serif";
+                context.fillText(demonArray[demonID].Name, level * widthOneDemon, Yarray[level]);
+                var returnY = Yarray[level];
+                Yarray[level] += 20;
+                for (let i = 0; i < 20; i++) {
+                    Yarray[i] = Yarray[level];
+                }
+                return returnY;
+            }
+            var sourceDemon1 = fusionResult.sourceDemon1;
+            var sourceDemon2 = fusionResult.sourceDemon2;
+            var Y1 = drawFusionResultTree2(canvas, sourceDemon1.ID, level + 1, Yarray);
+            var Y2 = drawFusionResultTree2(canvas, sourceDemon2.ID, level + 1, Yarray);
+            context.font = "12px serif";
+            var returnY = (Y1 + Y2) / 2;
+            context.fillText(demonArray[demonID].Name + " (" + FusionResultArraySotai[demonID].magCost + ")", level * widthOneDemon, returnY);
+            context.moveTo((level + 0.8) * widthOneDemon, returnY);
+            context.lineTo((level + 1) * widthOneDemon, Y1);
+            context.moveTo((level + 0.8) * widthOneDemon, returnY);
+            context.lineTo((level + 1) * widthOneDemon, Y2);
+            context.strokeStyle = "red";
+            context.lineWidth = 2;
+            context.stroke();
+            return returnY;
+        }
+*/
+
+        function generateFusionTreeDisplayCellTxt(demonID, fusionResult) {
+            if (fusionResult == undefined) {
+                return "-";
+            } else if (fusionResult.magCost == undefined) {
+                return "No magCost";
+            }
+            var txt = ""; //demonArray[demonID].Name;
+            txt += " (" + fusionResult.magCost + ")";
+
+            if (fusionResult.sourceDemon1 == undefined) {
+                txt += "-";
+            } else {
+                txt += fusionResult.sourceDemon1.Name + "[" + fusionResult.sourceDemon1ArrayID + "] + ";
+            }
+            if (fusionResult.sourceDemon2 == undefined) {
+                txt += "-";
+            } else {
+                txt += fusionResult.sourceDemon2.Name + "[" + fusionResult.sourceDemon2ArrayID + "]";
+            }
+
+            return txt;
+        }
+
+
+        // 各種初期化
+        function makeFusionTreeInitialize() {
+            // 種族別悪魔リスト
+            for (let key in ENUMSpecies) {
+                let value = ENUMSpecies[key];
+                if (value == -1) {
+                    continue;
+                }
+                //console.log("<p>" + key + ", "+ value + "</p>");
+                DemonListBySpecies[value] = [];
+            }
+
+            //　種族別悪魔リストに悪魔追加
+            for (let value of demonArray) {
+                if (value == undefined) {
+                    //console.log("<p>undefined!</p>");
+                    continue;
+                }
+                //console.log("<p>" + value.Name + ", " + value.Species + "</p>");
+                DemonListBySpecies[value.Species].push(value);
+            }
+
+            //　種族別悪魔リストをグレードでソート
+            for (let key in ENUMSpecies) {
+                let value = ENUMSpecies[key];
+                if (value == -1) {
+                    continue;
+                }
+                //console.log("<p>" + key + ", "+ value + "</p>");
+                DemonListBySpecies[value].sort(function (a, b) {
+                    if (a.Grade < b.Grade) {
+                        return -1;
+                    }
+                    if (a.Grade > b.Grade) {
+                        return 1;
+                    }
+                    return 0;
+                })
+            }
+
+            for (let value of DemonListBySpecies[ENUMSpecies.Megami]) {
+                if (value == undefined) {
+                    //console.log("<p>undefined!</p>");
+                    continue;
+                }
+                console.log("<p>" + value.Name + "</p>");
+            }
+
+
+            // 逆引き表
+            for (var i = 0; i < demonArray.length; i++) {
+                ReverseFusionArray[i] = [];
+            }
+
+            for (var i = 0; i < demonArray.length; i++) {
+                for (var j = 0; j < i; j++) {
+                    let sourceDemon1 = demonArray[i];
+                    let sourceDemon2 = demonArray[j];
+                    if ((sourceDemon1 == undefined) || (sourceDemon2 == undefined)) {
+                        continue;
+                    }
+                    let resultDemon = DemonFusion(sourceDemon1, sourceDemon2);
+                    if (resultDemon == undefined) {
+                        continue;
+                    }
+
+                    ReverseFusionArray[resultDemon.ID].push(new DemonPair(sourceDemon1, sourceDemon2));
+                }
+            }
+
+
+        }
+
+        //  オンクリック関数
+        function makeFusionTreeMain() {
+            console.log("<p>makeFusionTreeMain Start!</p>");
+
+            var iCondition = new Condition();
+
+            // 条件のセット1。☆1, 2を無制限に使える。
+            for (var i = 0; i < demonArray.length; i++) {
+                let demon = demonArray[i];
+                if (demon == undefined) {
+                    continue;
+                }
+                //console.log("<p>i="+i+"</p");
+        /*
+                let starGrade = calcStarGrade(demon.Grade);
+                if (starGrade <= 2) {
+                    //FusionResultArray[i] = new FusionResult(undefined, undefined, 0);
+                    iCondition.availableDemonsSotai[i] = -1;
+                    //iCondition.AvailableDemons.push(new ConditionDemon(demon, -1, ENUMArchType.Sotai));
+                } else {
+                    iCondition.availableDemonsSotai[i] = 0;
+                }
+                */
+                let selectID = "AvailableDemon"+i;
+                let value = document.getElementById(selectID).value;
+                //console.log("Available Demon: " + value);
+                if(+value > 0) {
+                    iCondition.availableDemonsSotai[i] = +value;
+                    console.log("Input Available Demon: "+demonArray[i].Name + "="+value);
+                }
+                let checkboxID = "AvailableDemonNoLimit"+i;
+                value = document.getElementsByName(checkboxID);
+                console.log("value="+value);
+                if(value[0].checked){
+                    iCondition.availableDemonsSotai[i] = -1;
+                    console.log("Input Available Demon: "+demonArray[i].Name + "=-1");
+                }
+                //無制限:<input type=checkbox name="AvailableDemonNoLimit1" value="1"><br />
+            }
+
+            /*
+            // 条件のセット2。有限個数悪魔をセット。
+            iCondition.availableDemonsSotai[79] = 1;   //ライラ
+            iCondition.availableDemonsSotai[100] = 1;   //ホルス
+            iCondition.availableDemonsSotai[105] = 1;   //グレンデル
+            iCondition.availableDemonsSotai[110] = 1;   //イシス
+            iCondition.availableDemonsSotai[111] = 1;   //ベルセルク
+            iCondition.availableDemonsSotai[112] = 2;   //オセ
+            iCondition.availableDemonsSotai[138] = 1;   //セイリュウ
+            //iCondition.availableDemonsSotai[228] = 1;   //シヴァ
+            iCondition.availableDemonsSotai[175] = 1;   //ゴグマゴグ
+            //iCondition.availableDemonsSotai[176] = 1;   //ガルーダ
+            iCondition.availableDemonsSotai[183] = 1;   //クーフーリン
+            //iCondition.availableDemonsSotai[222] = 1;   //イザナミ
+*/
+
+            // ConditionSotaiの無制限悪魔情報をFusionResultArrayに転記
+            for (var i = 0; i < demonArray.length; i++) {
+                if (iCondition.availableDemonsSotai[i] == -1) {
+                    FusionResultArraySotai[i] = new FusionResult(undefined, undefined, 0, 0, 0);
+                }
+            }
+
+            //FusionResultArraySotai[1] = new FusionResult(undefined, undefined, 0);
+            //FusionResultArraySotai[2] = new FusionResult(undefined, undefined, 0);
+
+            // 無制限悪魔同士の合体での合体結果を作成する。（収束するまで合体を繰り返し）
+            for (var i = 0; i < 100; i++) {
+                console.log("<p> Round " + i + "</p>");
+                let result = calcFusionResult(FusionResultArraySotai, FusionResultArraySotai, 0, 0);
+                if (result == undefined) {
+                    break;
+                }
+                FusionResultArraySotai = result;
+            }
+
+            FusionResults.push(FusionResultArraySotai);
+
+            // For Debug 合体結果リストの表示
+            /*
+            for (var i = 0; i < demonArray.length; i++) {
+                let fusionResult = FusionResultArraySotai[i];
+                if (fusionResult == undefined) {
+                    continue;
+                }
+                console.log("<p>FusionResult: " + demonArray[i].Name + " = ");
+                if (fusionResult.sourceDemon1 == undefined) {
+                    console.log(fusionResult.sourceDemon1 + " + " + fusionResult.sourceDemon2 + " , " + fusionResult.magCost + "</p>");
+                } else {
+                    console.log(fusionResult.sourceDemon1.Name + " + " + fusionResult.sourceDemon2.Name + " , " + fusionResult.magCost + "</p>");
+                }
+            }
+    */
+            calcFusionResultWithCondition(iCondition.availableDemonsSotai);
+
+            for (var i = 0; i < FResultsIDList.length; i++) {
+                console.log("<p>FResults(FResultsIDList)[" + FResultsIDList[i] + "]" + FusionResults[FResultsIDList[i]][100].magCost + "</p>");
+            }
+            for (var i = FResultsIDList[FResultsIDList.length - 1] + 1; i < FusionResults.length; i++) {
+                console.log("<p>FResults[" + i + "]" + FusionResults[i][100].magCost + "</p>");
+            }
+
+
+            var currentDate = new Date();
+            console.log("<p>Time: " + currentDate + " " + currentDate.getMilliseconds() + "</p>");
+
+            var displayResutTreeElement = document.getElementById("DisplayResultTree");
+            console.log("<p>DisplayResultTree = " + displayResutTreeElement + "</p>");
+            console.log("<p>" + displayResutTreeElement + "</p>");
+
+            /*
+            //for (var i = 0; i < FusionResults.length; i++) {
+            for (var i = FResultsIDList[FResultsIDList.length - 1]; i < FusionResults.length; i++) {
+                var canvasElement = document.createElement("canvas");
+                drawFusionResultTree(canvasElement, 236, i);
+                //drawFusionResultTree(canvasElement, 112, i);
+                var pElement = document.createElement("p");
+                pElement.appendChild(canvasElement);
+                displayResutTreeElement.appendChild(pElement);
+            }
+            */
+
+            /* 全悪魔のツリー表示
+            for (var i = 0; i < demonArray.length; i++) {
+                var demon = demonArray[i];
+                if ((demon == undefined) || (demon.FlagFusionMade == 0)) {
+                    continue;
+                }
+                var canvasElement = document.createElement("canvas");
+                drawFusionResultTree(canvasElement, i, FusionResults.length - 1);
+                var pElement = document.createElement("p");
+                pElement.appendChild(canvasElement);
+                displayResutTreeElement.appendChild(pElement);
+            }
+            */
+
+            /*
+            console.log("<p>オセ</p>");
+            for (var i = 0; i < ReverseFusionArray[112].length; i++) {
+                var demon1 = ReverseFusionArray[112][i].demon1;
+                var demon2 = ReverseFusionArray[112][i].demon2;
+                console.log("<p>" + demon1.Name + ", " + demon2.Name + "</p>");
+                //console.log("<p>"+typeof(demon1)+"</p>");
+            }
+            */
+
+            var constWidth = 300;
+            var FusionTreeElement = document.getElementById("FusionTree");
+            console.log("<p>FusionTreeElement = " + FusionTreeElement + "</p>");
+            var tableElement = document.createElement("table");
+            tableElement.border = 1;
+            tableElement.className = "sampleTable";
+            tableElement.width = constWidth * demonArray.length;
+            var rowElement = tableElement.insertRow(-1);
+            var columnElement = rowElement.insertCell(-1);
+            columnElement.width = constWidth;
+
+            for (var i = 62; i < demonArray.length; i++) {
+                //for (var i = 0; i < 10; i++) {
+                columnElement = rowElement.insertCell(-1);
+                columnElement.width = constWidth;
+                if (demonArray[i] != undefined) {
+                    columnElement.appendChild(document.createTextNode(demonArray[i].Name));
+                }
+            }
+
+            for (var i = 0; i < FResultsIDList.length; i++) {
+                rowElement = tableElement.insertRow(-1);
+                columnElement = rowElement.insertCell(-1);
+                columnElement.width = constWidth;
+                columnElement.appendChild(document.createTextNode(FResultsIDList[i]));
+                for (var j = 62; j < demonArray.length; j++) {
+                    //for (var j = 0; j < 10; j++) {
+                    columnElement = rowElement.insertCell(-1);
+                    columnElement.width = constWidth;
+                    columnElement.appendChild(document.createTextNode(generateFusionTreeDisplayCellTxt(j, FusionResults[FResultsIDList[i]][j])));
+                }
+            }
+
+            for (var i = FResultsIDList[FResultsIDList.length - 1]; i < FusionResults.length; i++) {
+                rowElement = tableElement.insertRow(-1);
+                columnElement = rowElement.insertCell(-1);
+                columnElement.width = constWidth;
+                columnElement.appendChild(document.createTextNode(i));
+                for (var j = 62; j < demonArray.length; j++) {
+                    //for (var j = 0; j < 10; j++) {
+                    columnElement = rowElement.insertCell(-1);
+                    columnElement.width = constWidth;
+                    columnElement.appendChild(document.createTextNode(generateFusionTreeDisplayCellTxt(j, FusionResults[i][j])));
+                }
+            }
+            //FusionTreeElement.appendChild(document.createTextNode("abc"));
+            FusionTreeElement.appendChild(tableElement);
+
+        }
+
+        // 自動実行コード（チェックボックス表示など）
+        makeFusionTreeInitialize();
+
+        var inputElement = document.getElementById("InputAvailableDemon");
+        //var ADTable = document.createElement("table");
+        //ADTable.insertRow();        
+        for (var i = 0; i < demonArray.length; i++) {
+            if (demonArray[i] == undefined) {
+                continue;
+            }
+            var rowElement = inputElement.insertRow(-1);
+            var columnElement = rowElement.insertCell(-1);
+            columnElement.appendChild(document.createTextNode(demonArray[i].Name));
+            columnElement = rowElement.insertCell(-1);
+            columnElement.appendChild(document.createTextNode(calcStarGrade(demonArray[i].Grade)));
+            columnElement = rowElement.insertCell(-1);
+            columnElement.appendChild(document.createTextNode(demonArray[i].Grade));
+            columnElement = rowElement.insertCell(-1);
+            var selectElement = document.createElement("select");
+            selectElement.id = "AvailableDemon"+i;
+            for(var j=0; j<6; j++){
+                let optionElement = document.createElement("option");
+                optionElement.setAttribute("value", j);
+                optionElement.innerHTML = j;
+                selectElement.appendChild(optionElement);
+            }
+            columnElement.appendChild(selectElement);
+            columnElement = rowElement.insertCell(-1);
+            var checkboxElement = document.createElement("input");
+            checkboxElement.type = "checkbox";
+            checkboxElement.name = "AvailableDemonNoLimit" + i;
+            checkboxElement.value="1";
+            columnElement.appendChild(checkboxElement);
+        }
+
+
+
+
+        /*
+        <p id="InputAvailableDemon"></p>
+    <table border=1 class="vailableDemonTable">
+        <tbody>
+            <tr>
+                <td width=200>名前</td>
+                <td width=50>星</td>
+                <td width=100>グレード</td>
+                <td width=100>所持個数</td>
+                <td width=100>無制限使用</td>
+            </tr>
+
+                    <select name="AvailableDemon1">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </td>
+                <td>
+                    無制限:<input type=checkbox name="AvailableDemonNoLimit1" value="1"><br />
+
+            */
 
     </script>
+
+
+
+
 
 </body>
 
