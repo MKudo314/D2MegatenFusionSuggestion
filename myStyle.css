@@ -29,6 +29,7 @@ input[type=radio] {
     vertical-align: middle;
 }
 
+
 .mainBox {
     width: 1080px;
 }
@@ -153,6 +154,10 @@ td {
         height: 30px;
         vertical-align: middle;
     }
+    input[type=radio]:before {
+        content: "ddd";
+        }
+        
     
     .mainBox {
         width: 1080px;
