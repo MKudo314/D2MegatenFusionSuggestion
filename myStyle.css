@@ -13,6 +13,17 @@ h2{
     font-size: 18px;
 }
 
+input[type=checkbox] {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+input[type=radio] {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
 .mainBox {
     width: 1080px;
 }
