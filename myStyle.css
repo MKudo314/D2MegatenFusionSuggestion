@@ -28,6 +28,9 @@ input[type=radio] {
     height: 20px;
     vertical-align: middle;
 }
+input[type=radio]:before {
+    content: "pc";
+    }
 
 
 .mainBox {
