@@ -34,10 +34,14 @@ td {
 .availableDemonTable {
     border-collapse: collapse;
     table-layout: fixed;
-    font-size: 20px;    
-    width: 2000px;
+    font-size: 15px;
+    width: 700px;
 }
 
+.availableDemonTable td{
+    border-collapse: collapse;
+    font-size: 20px;    
+}
 
 .borderBox {
     border: 1px solid black;
