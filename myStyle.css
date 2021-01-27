@@ -34,8 +34,10 @@ td {
 .availableDemonTable {
     border-collapse: collapse;
     table-layout: fixed;
-    font-size: 15px;    
+    font-size: 20px;    
+    width: 700px;
 }
+
 
 .borderBox {
     border: 1px solid black;
