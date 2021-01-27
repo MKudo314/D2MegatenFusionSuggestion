@@ -1,0 +1,96 @@
+@charset "utf-8";
+
+body {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+h1 {
+    font-size: 20px;
+}
+
+h2{
+    font-size: 18px;
+}
+
+.mainBox {
+    width: 1080px;
+}
+
+.sampleTable {
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 8px
+}
+
+table {
+    border: 1px solid black;
+}
+
+td {
+    border: 1px solid black;
+}
+
+.availableDemonTable {
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 12px;    
+}
+
+.borderBox {
+    border: 1px solid black;
+    font-size: 13px;
+    padding: 20px;
+}
+
+.FusionTreeClassFusionTreeClass{
+    list-style-type: none;
+}
+
+.FusionTreeClassFusionTreeClass ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: square;
+}
+    
+.FusionTreeClassFusionTreeClass ul {
+    position: relative;
+    /* margin-top: 1rem; */
+    margin-left: 50px;
+    padding-left: 15px;
+}
+    
+.FusionTreeClassFusionTreeClass ul:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    border-left: 1px solid black;
+}
+    
+.FusionTreeClassFusionTreeClass ul li {
+    position: relative;
+}
+    
+.FusionTreeClassFusionTreeClass ul li:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 0px;
+    width: 0px;
+    height: 0;
+    border-top: 1px solid white;
+}
+    
+.FusionTreeClassFusionTreeClass ul li:last-child:before {
+    top: 15px;
+    left: -25px;
+    bottom: 0;
+    height: auto;
+    width: 20px;
+    background-color: white;
+}
