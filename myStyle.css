@@ -17,6 +17,10 @@ h2{
     width: 1080px;
 }
 
+.bigfontcheckbox {
+    font-size: 20px;
+}
+
 .sampleTable {
     border-collapse: collapse;
     table-layout: fixed;
