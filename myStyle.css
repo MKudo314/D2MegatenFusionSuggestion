@@ -101,6 +101,7 @@ td {
     left: 0;
     width: 0;
     border-left: 1px solid black;
+
 }
     
 .FusionTreeClassFusionTreeClass ul li {
@@ -121,6 +122,7 @@ td {
 .FusionTreeClassFusionTreeClass ul li:last-child:before {
     top: 18px;
     left: -21px;
+    position: absolute;
     bottom: 0;
     height: auto;
     width: 15px;
