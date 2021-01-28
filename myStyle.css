@@ -28,9 +28,6 @@ input[type=radio] {
     height: 20px;
     vertical-align: middle;
 }
-input[type=radio]:before {
-    content: "pc";
-    }
 
 
 .mainBox {
@@ -75,6 +72,10 @@ td {
     padding: 20px;
 }
 
+.marginP {
+    margin-left: 20px;
+}
+
 .FusionTreeClassFusionTreeClass{
     list-style-type: none;
 }
@@ -87,16 +88,15 @@ td {
     
 .FusionTreeClassFusionTreeClass ul {
     position: relative;
-    /* margin-top: 1rem; */
-    margin-left: 50px;
-    padding-left: 15px;
+    margin-left: 25px;
+    padding-left: 14px;
 }
     
 .FusionTreeClassFusionTreeClass ul:before {
     content: "";
     display: block;
     position: absolute;
-    top: 0;
+    top: 3px;
     bottom: 0;
     left: 0;
     width: 0;
@@ -119,13 +119,55 @@ td {
 }
     
 .FusionTreeClassFusionTreeClass ul li:last-child:before {
-    top: 15px;
-    left: -25px;
+    top: 18px;
+    left: -21px;
     bottom: 0;
     height: auto;
-    width: 20px;
+    width: 15px;
     background-color: white;
 }
+
+
+
+ul {
+    margin: 0;
+    /*margin-left: 0.5em;*/
+    padding: 0 0 0 0;
+   }
+    
+   li {
+    /*margin-left: 0.5em;*/
+    padding-left: 5px;
+    list-style-position: outside;
+    list-style-type: none;
+    font-size: 13pt;
+   }
+    
+    li.expandableTree {
+     list-style-image: url(a.png);
+     /*list-style-type: disc;*/
+     cursor: pointer;
+    }
+    
+    li.closeTree{
+        list-style-image: url(c.png);
+        /*list-style-type: square;*/
+        /*list-style-type: "-";*/
+       }
+
+       li.expand {
+     list-style-image: url(b.png);
+     /*list-style-type: "+";*/
+    }
+    
+    
+    li.expandableTree > li, li.closeTree > ul {
+     display: none;
+    }
+    
+    li.expand > ul {
+     display: block;
+    }
 }
 
 
@@ -157,10 +199,7 @@ td {
         height: 30px;
         vertical-align: middle;
     }
-    input[type=radio]:before {
-        content: "ddd";
-        }
-        
+    
     
     .mainBox {
         width: 1080px;

@@ -478,6 +478,7 @@ function generateFusionResultTreeTable2(tableElement, demonID, fusionResultsCoun
 function generateFusionResultTreeUL(demonID, fusionResultsCount) {
     var ulElement = document.createElement("ul");
     ulElement.className = "FusionTreeClassFusionTreeClass";
+    ulElement.onclick=ClickEvent; //
 
     var Yarray = [];
     for (var i = 0; i < 20; i++) {
@@ -505,6 +506,7 @@ function generateFusionResultTreeUL2(ulElement, demonID, fusionResultsCount, lev
         //var text = demonArray[demonID].Name;
         var returnY = Yarray[level];
         var li2 = document.createElement("li");
+        li2.className = "expandableTree"; //
         var textElement = document.createTextNode(text);
         li2.appendChild(textElement);
         li2.style.color = "red";
@@ -521,8 +523,10 @@ function generateFusionResultTreeUL2(ulElement, demonID, fusionResultsCount, lev
         //var text = demonArray[demonID].Name + " (" + fusionResult.magCost + ") [" + fusionResultsCount + "]";
         var text = generateFusionResultTxt(demonID, fusionResult);
         var li2 = document.createElement("li");
+        li2.className = "expandableTree closeTree expand"; //
         li2.appendChild(document.createTextNode(text));
         var ul2 = document.createElement("ul");
+        
         var Y1 = generateFusionResultTreeUL2(ul2, sourceDemon1.ID, fusionResult.sourceDemon1ArrayID, level + 1, Yarray);
         var Y2 = generateFusionResultTreeUL2(ul2, sourceDemon2.ID, fusionResult.sourceDemon2ArrayID, level + 1, Yarray);
         li2.appendChild(ul2);
@@ -891,3 +895,13 @@ function startFunction() {
 
 }
 
+
+function ClickEvent() {
+    var sender = event.srcElement || event.target;
+    if (sender.nodeName == "LI") {
+      var clist = sender.classList;
+      if (clist.contains("closeTree")) {
+        clist.toggle("expand");
+      }
+    }
+  }
