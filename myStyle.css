@@ -179,7 +179,6 @@ ul {
 
 
 /* スマホ用 */
-/*
 @media screen and (max-width: 480px){ 
     body {
         font-family: sans-serif;
@@ -210,7 +209,7 @@ ul {
     }
 
     input[type=radio]::before {
-        content: "SP";
+        content: "SPSP";
     }
 
     
@@ -334,4 +333,5 @@ ul {
          display: block;
         }
     
-}*/
+}
+
