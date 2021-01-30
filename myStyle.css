@@ -293,8 +293,8 @@ ul {
 
     .FusionTree {
         margin-left: 20px;
-        font-size: 9px;
-        width: 800px;
+        font-size: 6px;
+        width: 1000px;
     }
 
     .FusionTreeClassFusionTreeClass{
@@ -309,7 +309,7 @@ ul {
         
     .FusionTreeClassFusionTreeClass ul {
         position: relative;
-        margin-left: 50px;
+        margin-left: 15px;
         padding-left: 15px;
     }
         
