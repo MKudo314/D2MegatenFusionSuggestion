@@ -29,6 +29,10 @@ input[type=radio] {
     vertical-align: middle;
 }
 
+input[type=radio]::before {
+    content: "PC";
+}
+
 
 .mainBox {
     width: 1080px;
@@ -201,7 +205,11 @@ ul {
         height: 30px;
         vertical-align: middle;
     }
-    
+
+    input[type=radio]::before {
+        content: "SP";
+    }
+
     
     .mainBox {
         width: 1080px;
