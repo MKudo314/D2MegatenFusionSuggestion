@@ -30,6 +30,7 @@ input[type=radio] {
 }
 
 input[type=radio]::before {
+    left: 15px;
     content: "PC";
 }
 
@@ -177,6 +178,8 @@ ul {
 }
 
 
+/* スマホ用 */
+/*
 @media screen and (max-width: 480px){ 
     body {
         font-family: sans-serif;
@@ -240,13 +243,6 @@ ul {
         width: 1000px;
     }
     
-    /*
-    .availableDemonTable td{
-        border-collapse: collapse;
-        font-size: 20px;    
-    }
-    */
-    
     .borderBox {
         border: 1px solid black;
         font-size: 13px;
@@ -265,7 +261,6 @@ ul {
         
     .FusionTreeClassFusionTreeClass ul {
         position: relative;
-        /* margin-top: 1rem; */
         margin-left: 50px;
         padding-left: 15px;
     }
@@ -307,12 +302,10 @@ ul {
 
     ul {
         margin: 0;
-        /*margin-left: 0.5em;*/
         padding: 0 0 0 0;
        }
         
        li {
-        /*margin-left: 0.5em;*/
         padding-left: 5px;
         list-style-position: outside;
         list-style-type: none;
@@ -321,19 +314,15 @@ ul {
         
         li.expandableTree {
          list-style-image: url(a.png);
-         /*list-style-type: disc;*/
          cursor: pointer;
         }
         
         li.closeTree{
             list-style-image: url(c.png);
-            /*list-style-type: square;*/
-            /*list-style-type: "-";*/
            }
     
            li.expand {
          list-style-image: url(b.png);
-         /*list-style-type: "+";*/
         }
         
         
@@ -345,4 +334,4 @@ ul {
          display: block;
         }
     
-}
+}*/
