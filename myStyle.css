@@ -305,4 +305,44 @@ ul {
         background-color: white;
     }
 
+    ul {
+        margin: 0;
+        /*margin-left: 0.5em;*/
+        padding: 0 0 0 0;
+       }
+        
+       li {
+        /*margin-left: 0.5em;*/
+        padding-left: 5px;
+        list-style-position: outside;
+        list-style-type: none;
+        font-size: 13pt;
+       }
+        
+        li.expandableTree {
+         list-style-image: url(a.png);
+         /*list-style-type: disc;*/
+         cursor: pointer;
+        }
+        
+        li.closeTree{
+            list-style-image: url(c.png);
+            /*list-style-type: square;*/
+            /*list-style-type: "-";*/
+           }
+    
+           li.expand {
+         list-style-image: url(b.png);
+         /*list-style-type: "+";*/
+        }
+        
+        
+        li.expandableTree > li, li.closeTree > ul {
+         display: none;
+        }
+        
+        li.expand > ul {
+         display: block;
+        }
+    
 }
