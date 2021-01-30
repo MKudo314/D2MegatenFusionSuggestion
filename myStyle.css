@@ -64,6 +64,28 @@ td {
     width: 1000px;
 }
 
+.ADTtd1 {
+    width: 100px;
+}
+
+.ADTtd2 {
+    width: 50px;
+}
+
+.ADTtd3 {
+    width: 100px;
+}
+
+.ADTtd4 {
+    width: 100px;
+}
+
+.ADTtd5 {
+    width: 100px;
+}
+
+
+
 /*
 .availableDemonTable td{
     border-collapse: collapse;
@@ -194,7 +216,7 @@ ul {
     }
     
     button {
-        font-size: 40px;
+        font-size: 15px;
     }
     
     input[type=checkbox] {
@@ -212,13 +234,14 @@ ul {
         content: "SPSP";
     }
 
-    
+    /*
     .mainBox {
-        width: 1080px;
+        width: 480px;
     }
+    */
     
     .bigfontcheckbox {
-        font-size: 40px;
+        font-size: 15px;
     }
     
     .sampleTable {
@@ -238,8 +261,28 @@ ul {
     .availableDemonTable {
         border-collapse: collapse;
         table-layout: fixed;
-        font-size: 40px;
-        width: 1000px;
+        font-size: 15px;
+        width: 100%;
+    }
+
+    .ADTtd1 {
+        width: 50%;
+    }
+    
+    .ADTtd2 {
+        width: 12.5%;
+    }
+    
+    .ADTtd3 {
+        width: 12.5%;
+    }
+    
+    .ADTtd4 {
+        width: 12.5%;
+    }
+    
+    .ADTtd5 {
+        width: 12.5%;
     }
     
     .borderBox {
