@@ -116,7 +116,7 @@ td {
 .FusionTreeClassFusionTreeClass ul {
     position: relative;
     margin-left: 25px;
-    padding-left: 14px;
+    padding-left: 12px;
 }
     
 .FusionTreeClassFusionTreeClass ul:before {
@@ -190,7 +190,7 @@ ul {
     }
     
     
-    li.expandableTree > li, li.closeTree > ul {
+    /*li.expandableTree > li,*/ li.closeTree > ul {
      display: none;
     }
     
@@ -310,7 +310,7 @@ ul {
     .FusionTreeClassFusionTreeClass ul {
         position: relative;
         margin-left: 15px;
-        padding-left: 15px;
+        padding-left: 12px;
     }
         
     .FusionTreeClassFusionTreeClass ul:before {
@@ -332,7 +332,7 @@ ul {
         content: "";
         display: block;
         position: absolute;
-        top: 15px;
+        top: 14px;
         left: 0px;
         width: 0px;
         height: 0;
@@ -340,7 +340,7 @@ ul {
     }
         
     .FusionTreeClassFusionTreeClass ul li:last-child:before {
-        top: 15px;
+        top: 14px;
         left: -25px;
         bottom: 0;
         height: auto;
@@ -374,7 +374,7 @@ ul {
         }
         
         
-        li.expandableTree > li, li.closeTree > ul {
+        /*li.expandableTree > li,*/ li.closeTree > ul {
          display: none;
         }
         

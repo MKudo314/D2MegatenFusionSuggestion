@@ -897,7 +897,9 @@ function startFunction() {
 
 
 function ClickEvent() {
+    //console.log("srcElement=" + event.srcElement + event.srcElement.innerHTML);
     var sender = event.srcElement || event.target;
+    //console.log("sender=" + sender + sender.innerHTML);
     if (sender.nodeName == "LI") {
       var clist = sender.classList;
       if (clist.contains("closeTree")) {
