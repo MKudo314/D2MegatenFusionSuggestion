@@ -231,7 +231,7 @@ ul {
     }
 
     input[type=radio]::before {
-        content: "SPSP";
+        content: "SP333";
     }
 
     /*
