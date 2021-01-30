@@ -1,7 +1,7 @@
 /*
     Program Name: demonData.js
 
-    Copyright © 2021 Makokun All Rights Reserved.
+    Copyright © 2021 MKudoh314Lab All Rights Reserved.
 */
 
 function initDemonData() {
