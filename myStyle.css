@@ -31,7 +31,7 @@ input[type=radio] {
 
 input[type=radio]::before {
     left: 15px;
-    content: "PC";
+    content: "";
 }
 
 
@@ -231,7 +231,7 @@ ul {
     }
 
     input[type=radio]::before {
-        content: "SP4";
+        content: "";
     }
 
     /*
