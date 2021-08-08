@@ -857,11 +857,11 @@ function startFunction() {
         }
         var rowElement = inputElement.insertRow(-1);
         var columnElement = rowElement.insertCell(-1);
-        columnElement.appendChild(document.createTextNode(demonArray[i].Name));
-        columnElement = rowElement.insertCell(-1);
         columnElement.appendChild(document.createTextNode(calcStarGrade(demonArray[i].Grade)));
         columnElement = rowElement.insertCell(-1);
         columnElement.appendChild(document.createTextNode(demonArray[i].Grade));
+        columnElement = rowElement.insertCell(-1);
+        columnElement.appendChild(document.createTextNode(demonArray[i].Name));
         columnElement = rowElement.insertCell(-1);
 
         /*
