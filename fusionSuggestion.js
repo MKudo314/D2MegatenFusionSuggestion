@@ -39,6 +39,7 @@ function DemonFusion(demon1, demon2) {
     var grade = Math.floor((demon1.Grade + demon2.Grade) / 2) + 1;
     var species = FusionSpeciesRule[demon1.Species][demon2.Species];
     console.log("in DemonFusion: " + demon1.Name + ", " + demon2.Name + ", " + species)
+    console.log("妖精・外道： " + FusionSpeciesRule[ENUMSpecies.Yose][ENUMSpecies.Gedo])
     if (species == ENUMSpecies.NoValue) {
         return undefined;
     }
