@@ -761,7 +761,7 @@ function makeFusionTreeInitialize() {
 
 //  オンクリック関数
 function makeFusionTreeMain() {
-    //console.log("<p>makeFusionTreeMain Start!</p>");
+    console.log("<p>makeFusionTreeMain Start!</p>");
 
     makeFusionTreeInitialize();
 
